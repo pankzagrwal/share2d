@@ -1,0 +1,51 @@
+import React from "react";
+import { makeStyles } from '@material-ui/core/styles';
+import BottomNavigation from '@material-ui/core/BottomNavigation';
+import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
+import Home from '@material-ui/icons/Home';
+import AccountCircle from '@material-ui/icons/AccountCircle';
+import Group from '@material-ui/icons/Group';
+import AddCircleOutline from '@material-ui/icons/AddCircleOutline';
+import {
+  Link,
+  useLocation
+} from "react-router-dom";
+
+const path = [
+    '/',
+    '/profile',
+    '/ReferBuddy',
+    '/no'
+]
+
+const useStyles = makeStyles({
+  root: {
+    position: 'fixed',
+    bottom: 0,
+    width: '100%'
+  },
+});
+
+export default function Navigation () {
+    const classes = useStyles();
+    const { pathname } = useLocation();
+    const [value, setValue] = React.useState(0);
+
+    React.useEffect(() => {
+        console.log(path.indexOf(pathname))
+        setValue(path.indexOf(pathname))
+    }, [pathname])
+
+    const handleChange = (event, newValue) => {
+        setValue(newValue);
+    };
+
+    return (
+            <BottomNavigation value={value} onChange={handleChange} className={classes.root}>
+                <BottomNavigationAction label="Home" value={0} icon={<Home />} component={Link} to={path[0]}/>
+                <BottomNavigationAction label="Profile" value={1} icon={<AccountCircle />} component={Link} to={path[1]}/>
+                <BottomNavigationAction label="Buddies" value={2} icon={<Group />}  component={Link} to={path[2]}/>
+                <BottomNavigationAction label="Buddy" value={3} icon={<AddCircleOutline />}  component={Link} to={path[3]}/>
+            </BottomNavigation>
+    )
+}
