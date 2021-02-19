@@ -2,7 +2,7 @@ import interceptor from '../../utils/interceptor.js';
 
 export const postRegistration = (payload) => async (dispatch) => {
     return interceptor({
-        url: 'http://3.20.116.189/accounts/registration',
+        url: 'api/accounts/registration',
         method: 'POST',
         body: payload
     }).then(res => {
