@@ -6,6 +6,7 @@ import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
 import { makeStyles } from '@material-ui/core/styles';
+import { useHistory } from "react-router-dom";
 
 import {postRegistration} from './actions.js';
 
@@ -34,6 +35,7 @@ const useStyles = makeStyles((theme) => ({
 export default function Registration () {
      const classes = useStyles();
      const dispatch = useDispatch();
+     const history = useHistory();
      const [name, setName] = React.useState('');
      const [shopName, setShopName] = React.useState('');
      const [shopAddress, setShopAddress] = React.useState('');
@@ -49,7 +51,9 @@ export default function Registration () {
             shopAddress,
             mobileNumber,
             password
-        }))
+        })).then(res => {
+             history.push("/addOffer");
+        })
     }
     return (
         <Container maxWidth='xs' justify='center' className={classes.paper}>
