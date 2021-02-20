@@ -1,16 +1,37 @@
 import interceptor from '../../utils/interceptor.js';
 
 export const postRegistration = (payload) => async (dispatch) => {
-    return interceptor({
-        url: 'api/accounts/registration',
+    const  {
+        name,
+        mobileNumber,
+        password,
+        shopAddress,
+        shopName
+    } = payload;
+    const data = {
+        username: mobileNumber,
+        phone: mobileNumber,
+        password,
+        store_name: shopName,
+        name,
+        address: shopAddress
+    }
+    let login;
+    const { status } = await interceptor({
+        url: 'http://3.20.116.189/accounts/registration',
         method: 'POST',
-        body: payload
-    }).then(res => {
-        console.log(res)
-    }).catch(err => {
-        const sessionID = 'abcdef';
-        localStorage.removeItem('tokenId');
-        localStorage.setItem('tokenId', sessionID);
-        return sessionID;
+        body: data
     })
+    if (status === 201) {
+        login = await interceptor({
+            url: 'http://3.20.116.189/accounts/session',
+            method: 'POST',
+            apiName: 'login',
+            body: {
+                username: mobileNumber,
+                password
+            }
+        })
+    }
+    return login;
 }
