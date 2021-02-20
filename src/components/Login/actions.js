@@ -7,7 +7,7 @@ export const postLogin = (payload) => async (dispatch) => {
     } = payload;
     let login;
         login = await interceptor({
-            url: 'http://3.20.116.189/accounts/session',
+            url: 'api/accounts/session',
             method: 'POST',
             apiName: 'login',
             body: {
