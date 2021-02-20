@@ -24,7 +24,7 @@ export const postRegistration = (payload) => async (dispatch) => {
     })
     if (status === 201) {
         login = await interceptor({
-            url: 'http://3.20.116.189/accounts/session',
+            url: 'api/accounts/session',
             method: 'POST',
             apiName: 'login',
             body: {
