@@ -6,6 +6,12 @@ const cancelTokens = {
   // apiName: [uuidToCancel]
 }
 
+let authToken = '';
+
+if(window.localStorage) {
+  authToken = localStorage.getItem('authToken')
+}
+
 export function cancel (apiName) {
   const token = apiTokens[apiName]
   const cancelToken = cancelTokens[apiName] || []
@@ -41,6 +47,9 @@ const interceptor =  (config) => {
   }
   if (!disableContentType) {
     headers['content-type'] = contentType
+  }
+  if (authToken) {
+    headers['Authorization'] = `Token ${authToken}`
   }
   return window.fetch(url, {
     ...config,
@@ -91,7 +100,13 @@ const interceptor =  (config) => {
         err.data = data
         return Promise.reject(err)
       }
-      return data.then((data) => ({ config, data, status, cancelled }))
+      return data.then((data) => {
+        if (apiName === 'login') {
+          authToken = data?.data?.token ?? '';
+          window.localStorage && localStorage.setItem('authToken', authToken);
+        }
+        return { config, data, status, cancelled }
+      })
     })
 }
 
