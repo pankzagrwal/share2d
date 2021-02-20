@@ -1,4 +1,5 @@
 import React from "react";
+import { useDispatch } from 'react-redux'
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
@@ -8,6 +9,9 @@ import {
     Checkbox 
 } from  '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import { useHistory } from "react-router-dom";
+
+import {postLogin} from './actions.js';
 
 import logoImage from '../../assets/share2d.png'
 
@@ -31,8 +35,10 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function Registration () {
+export default function Login () {
      const classes = useStyles();
+     const history = useHistory();
+     const dispatch = useDispatch();
      const [mobileNumber, setMobileNumber] = React.useState('');
      const [password, setPassword] = React.useState('');
      const [isOTP, setisOTP] = React.useState(false)
@@ -41,6 +47,15 @@ export default function Registration () {
     const handleSubmit = (evt) => {
         evt.preventDefault();
         evt.stopPropagation();
+        dispatch(postLogin({
+            mobileNumber,
+            password
+        })).then(res => {
+            history.push("/");
+        })
+    }
+    const handleRegister = () => {
+        history.push("/register");
     }
     return (
         <Container maxWidth='xs' justify='center' className={classes.paper}>
@@ -113,6 +128,12 @@ export default function Registration () {
                                 isOTP &&
                                 <Grid>
                                     <Button size="small" variant="outlined" color="primary">Re-send OTP</Button>
+                                </Grid>
+                            }
+                            {
+                                !isOTP &&
+                                <Grid>
+                                    <Button size="small" variant="outlined" color="primary" onClick={handleRegister}>Register</Button>
                                 </Grid>
                             }
                         </Grid>
