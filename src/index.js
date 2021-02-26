@@ -4,13 +4,35 @@ import App from './App';
 import { Provider } from 'react-redux'
 import configureStore from './store';
 import CssBaseline from '@material-ui/core/CssBaseline';
+import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import reportWebVitals from './reportWebVitals';
+
+import { green, deepPurple } from '@material-ui/core/colors';
+
+const outerTheme = createMuiTheme({
+  typography: {
+    fontFamily: [
+      'Poppins',
+      'Roboto',
+    ].join(','),
+  },
+  palette: {
+    primary: {
+          main: deepPurple[500],
+        },
+        secondary: {
+          main: green[500],
+        },
+  },
+});
 
 ReactDOM.render(
   <Provider store={configureStore()}>
     <React.StrictMode>
       <CssBaseline />
-      <App />
+      <ThemeProvider theme={outerTheme}>
+        <App />
+      </ThemeProvider>
     </React.StrictMode>
   </Provider>
   ,
