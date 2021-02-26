@@ -6,7 +6,7 @@ const cancelTokens = {
   // apiName: [uuidToCancel]
 }
 
-const baseUrl = '/api';
+const baseUrl = '/api'; //'http://3.20.116.189';
 
 let authToken = '';
 
