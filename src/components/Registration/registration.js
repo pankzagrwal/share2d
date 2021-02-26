@@ -10,23 +10,34 @@ import { useHistory } from "react-router-dom";
 
 import {postRegistration} from './actions.js';
 
-import logoImage from '../../assets/share2d.png'
+import background from '../../assets/background.jpg'
+import logo from '../../assets/logo.png'
 
 const useStyles = makeStyles((theme) => ({
   paper: {
-    marginTop: theme.spacing(8),
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
+    marginBottom: theme.spacing(8)
   },
   form: {
     width: '100%',
-    marginTop: theme.spacing(3),
+    marginTop: theme.spacing(1)
   },
-  logoContainer: {
-    backgroundImage: `url(${logoImage})`,
-    width: '100px',
-    height: '100px',
+  backgroundContainer: {
+  },
+  background: {
+    width: '100%',
+    backgroundImage: `url(${background})`,
+    padding: theme.spacing(3),
+    marginBottom: theme.spacing(3),
+    backgroundSize: 'cover',
+    backgroundRepeat: 'no-repeat',
+    color: 'white',
+  },
+  logo: {
+    backgroundImage: `url(${logo})`,
+    padding: theme.spacing(5),
     backgroundSize: 'cover',
     backgroundRepeat: 'no-repeat',
   }
@@ -56,12 +67,30 @@ export default function Registration () {
         })
     }
     return (
+        <>
+        <Grid container justify='center' alignItems='center' className={classes.backgroundContainer}>
+            <Grid item container className={classes.background}>
+                <Grid item container>
+                    <Grid item className={classes.logo}>
+
+                    </Grid>
+                    <Grid item>
+                        <Typography  variant="h6" gutterBottom>
+                            Welcome to Share2d
+                        </Typography>
+                        <Typography variant="caption" gutterBottom>
+                            The platform which helps you to increase your business
+                        </Typography>
+                    </Grid>
+                </Grid>
+            </Grid>
+         </Grid>
         <Container maxWidth='xs' justify='center' className={classes.paper}>
          <Grid container justify='center' alignItems='center'>
             <Grid item className={classes.logoContainer}>
             </Grid>
          </Grid>
-         <Typography variant="h4" component="h2" gutterBottom>
+         <Typography variant="h6"  gutterBottom>
             Registration
         </Typography>
             <form onSubmit={handleSubmit} autoComplete='off'>
@@ -139,5 +168,6 @@ export default function Registration () {
 
             </form>
         </Container>
+        </>
     )
 }
