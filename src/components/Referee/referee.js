@@ -6,7 +6,6 @@ import {
     Divider 
 } from '@material-ui/core';
 
-import PhoneIcon from '@material-ui/icons/Phone';
 
 const Prospect = () => {
 
@@ -18,11 +17,6 @@ const Prospect = () => {
             <Typography variant="subtitle2">
               Name
             </Typography>
-          </Grid>
-          <Grid item>
-            <Button  href={`tel:9552530381`} size='small' endIcon={<PhoneIcon />} color='primary'>
-              9552530381
-            </Button>
           </Grid>
           <Grid item>
             <Typography variant='overline'>
