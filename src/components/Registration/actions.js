@@ -18,13 +18,13 @@ export const postRegistration = (payload) => async (dispatch) => {
     }
     let login;
     const { status } = await interceptor({
-        url: 'api/accounts/registration',
+        url: '/accounts/registration',
         method: 'POST',
         body: data
     })
     if (status === 201) {
         login = await interceptor({
-            url: 'api/accounts/session',
+            url: '/accounts/session',
             method: 'POST',
             apiName: 'login',
             body: {
