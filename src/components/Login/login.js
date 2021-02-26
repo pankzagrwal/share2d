@@ -13,11 +13,12 @@ import { useHistory } from "react-router-dom";
 
 import {postLogin} from './actions.js';
 
-import logoImage from '../../assets/share2d.png'
+import background from '../../assets/background.jpg'
+import logo from '../../assets/logo.png'
 
 const useStyles = makeStyles((theme) => ({
   paper: {
-    marginTop: theme.spacing(8),
+    // marginTop: theme.spacing(8),
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -26,10 +27,20 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
     marginTop: theme.spacing(3),
   },
-  logoContainer: {
-    backgroundImage: `url(${logoImage})`,
-    width: '100px',
-    height: '100px',
+  backgroundContainer: {
+  },
+  background: {
+    width: '100%',
+    backgroundImage: `url(${background})`,
+    padding: theme.spacing(3),
+    marginBottom: theme.spacing(3),
+    backgroundSize: 'cover',
+    backgroundRepeat: 'no-repeat',
+    color: 'white',
+  },
+  logo: {
+    backgroundImage: `url(${logo})`,
+    padding: theme.spacing(5),
     backgroundSize: 'cover',
     backgroundRepeat: 'no-repeat',
   }
@@ -58,13 +69,27 @@ export default function Login () {
         history.push("/register");
     }
     return (
-        <Container maxWidth='xs' justify='center' className={classes.paper}>
-         <Grid container justify='center' alignItems='center'>
-            <Grid item className={classes.logoContainer}>
+        <>
+        <Grid container justify='center' alignItems='center' className={classes.backgroundContainer}>
+            <Grid item container className={classes.background}>
+                <Grid item container>
+                    <Grid item className={classes.logo}>
+
+                    </Grid>
+                    <Grid item>
+                        <Typography  variant="h6" gutterBottom>
+                            Welcome to Share2d
+                        </Typography>
+                        <Typography variant="caption" gutterBottom>
+                            The platform which helps you to increase your business
+                        </Typography>
+                    </Grid>
+                </Grid>
             </Grid>
          </Grid>
-         <Typography variant="h4" component="h2" gutterBottom>
-            Login
+        <Container maxWidth='xs' justify='center' className={classes.paper}>
+         <Typography variant="h6" gutterBottom>
+            Login Account
         </Typography>
             <form onSubmit={handleSubmit} autoComplete='off'>
                 <Grid container spacing={2} alignItems='center' justify='center'>
@@ -152,5 +177,6 @@ export default function Login () {
 
             </form>
         </Container>
+        </>
     )
 }
