@@ -1,164 +1,147 @@
-import React from "react";
-import { useDispatch, useSelector } from 'react-redux'
-import { useHistory } from "react-router-dom";
+import React from 'react';
 import {
-    Button,
-    MenuItem,
     Container,
-    TextField,
-    FormControl,
-    Typography,
     Grid,
-    FormLabel,
-    RadioGroup,
-    FormControlLabel,
-    Radio
-} from '@material-ui/core'
+    Typography,
+    Card,
+    CardContent 
+} from '@material-ui/core';
+
+import { useHistory } from "react-router-dom";
+
 import { makeStyles } from '@material-ui/core/styles';
-import {getIndustries} from './actions.js';
+
+import CurrentProspects from '../Prospects/prospects.js';
+import Referee from '../Referee/referee.js';
+import Referal from '../Referal/referal.js';
 
 const useStyles = makeStyles((theme) => ({
+  backgroundContainer: {
+      backgroundColor: '#f64e60',
+      height: '200px',
+      color: 'white',
+  },
+  name: {
+      padding: theme.spacing(1)
+  },
   paper: {
-    marginTop: theme.spacing(8),
+    marginTop: theme.spacing(-7),
+    marginBottom: theme.spacing(7),
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
   },
-  form: {
-    width: '100%',
-    marginTop: theme.spacing(3),
+  box: {
+    borderRadius: '15px',
+    boxShadow: 'none',
   },
-  textField: {
-      width: '100%',
-      marginTop:  theme.spacing(2),
-      marginBottom:  theme.spacing(2)
+  received: {
+      backgroundColor: '#fff4de',
+      color: '#ffa800'
+  },
+  refered: {
+      backgroundColor: '#e1f0ff',
+      color: '#3699ff'
+  },
+  comission: {
+      backgroundColor: '#ffe2e5',
+      color: '#f64e60'
+  },
+  refer: {
+      backgroundColor: '#c9f7f5',
+      color: '#1bc5bd'
   }
 }));
 
-export default function AddOffer () {
+
+const Dashboard = () => {
     const classes = useStyles();
-    const dispatch = useDispatch();
     const history = useHistory();
-    const [industry, setIndustry] = React.useState('')
-    //  const [industries, setIndustries] = React.useState([])
-    const [geoPosition, setGeoPosition] = React.useState({});
-    const [commission, setCommission] = React.useState('');
-    const [commissionType, setCommissionType] = React.useState('flat');
 
-    const industriesList = useSelector(state => state?.config?.industries ?? [])
-
-    // React.useEffect(() => {
-    //     setIndustries(industriesList)
-    // }, [industriesList])
-
-    React.useEffect(() => {
-        dispatch(getIndustries())
-        getGeoLocation();
-    }, [dispatch])
-    const handleCommissionTypeChange = (evt) => {
-        console.log(evt)
-        setCommissionType(evt.target.value)
+    const handleRefer = () => {
+        history.push("/ReferBuddy");
     }
-    const getGeoLocation = () => {
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(function (position) {
-                const latitude  = position.coords.latitude;
-                const longitude = position.coords.longitude;
-                setGeoPosition({
-                    latitude,
-                    longitude
-                })
-            })
-        }
-
-    }
-
-    const handleSkip = () => {
-        history.push("/");
-    }
-
-
-    const handleSubmit = (evt) => {
-        evt.preventDefault();
-        evt.stopPropagation();
-        console.log({
-            geoPosition,
-            commissionType,
-            industry,
-            commission
-        })
-    }
-
-
     return (
-        <Container maxWidth='xs' justify='center' className={classes.paper}>
-            <Typography variant="h4" component="h2" gutterBottom>
-                Add Offer
-            </Typography>
-             <form onSubmit={handleSubmit} autoComplete='off' className={classes.form}>
-                 <Grid container spacing={2} alignItems='center' justify='center'>
+        <>
+        <Grid container className={classes.backgroundContainer}>
+            <Grid item xs={12}>
+                <Grid container justify='space-between'>
+                    <Grid item>
+                        <Typography variant="h6" className={classes.name}>
+                            Welcome Pankaj
+                        </Typography>
+                    </Grid>
+                </Grid>
+            </Grid>
+        </Grid>
+         <Container maxWidth='xs' justify='center' className={classes.paper}>
+                <Grid container spacing={3} justify='space-between' alignItems="center">
                     <Grid item xs={12}>
-                        {/* <FormControl variant="outlined" xs={12}> */}
-                            {/* <InputLabel id="industryLabel">Industries</InputLabel> */}
-                            <TextField
-                                select
-                                id="industry"
-                                value={industry}
-                                onChange={(evt) => {setIndustry(evt.target.value)}}
-                                label="Select Industry"
-                                className={classes.textField}
-                                >
-                                {   
-                                    industriesList.map((item, i) => {
-                                        return <MenuItem value={item.name} key={i}>{item.name}</MenuItem>
-                                    })
-                                }
-                            </TextField>
-                        {/* </FormControl> */}
+                        <Grid container justify="space-around" spacing={2} className={classes.summaryCard}>
+                            <Grid item xs={5}>
+                                <Card className={`${classes.box} ${classes.received}`}>
+                                    <CardContent>
+                                    <Typography variant="subtitle1" gutterBottom>
+                                        Received
+                                    </Typography>
+                                    <Typography variant="overline" display="block">
+                                        12
+                                    </Typography>
+                                    </CardContent>
+                                </Card>
+                            </Grid>
+                            <Grid item xs={5}>
+                                <Card className={`${classes.box} ${classes.refered}`}>
+                                    <CardContent>
+                                    <Typography variant="subtitle1" gutterBottom>
+                                     Refered
+                                    </Typography>
+                                    <Typography variant="overline" display="block">
+                                        3
+                                    </Typography>
+                                    </CardContent>
+                                </Card>
+                            </Grid>
+                            <Grid item xs={5}>
+                                <Card className={`${classes.box} ${classes.comission}`}>
+                                    <CardContent>
+                                    <Typography variant="subtitle1" gutterBottom>
+                                        Comission
+                                    </Typography>
+                                    <Typography variant="overline" display="block">
+                                        100.43
+                                    </Typography>
+                                    </CardContent>
+                                </Card>
+                            </Grid>
+                            <Grid item xs={5}>
+                                <Card className={`${classes.box} ${classes.refer}`}>
+                                    <CardContent>
+                                    <Typography variant="subtitle1" gutterBottom>
+                                        Refer
+                                    </Typography>
+                                    <Typography variant="overline" display="block" onClick={handleRefer}>
+                                        Customer
+                                    </Typography>
+                                    </CardContent>
+                                </Card>
+                            </Grid>
+                        </Grid>
                     </Grid>
                     <Grid item xs={12}>
-                        <TextField
-                            name="commission"
-                            variant="outlined"
-                            type="number"
-                            required
-                            fullWidth
-                            label="Commission"
-                            onChange={(evt) => {setCommission(evt.target.value)}}
-                        />
+                        <CurrentProspects />
                     </Grid>
                     <Grid item xs={12}>
-                        <FormControl component="fieldset">
-                            <FormLabel component="legend">Commission Type</FormLabel>
-                            <RadioGroup  row value={commissionType} onChange={handleCommissionTypeChange}>
-                                <FormControlLabel value="percentage" control={<Radio color="primary" />} label="Percentage" />
-                                <FormControlLabel value="flat" control={<Radio color="primary" />} label="Flat" />
-                            </RadioGroup>
-                        </FormControl>
+                        <Referee />
                     </Grid>
                     <Grid item xs={12}>
-                        <Button
-                            type="submit"
-                            fullWidth
-                            variant="contained"
-                            color="primary"
-                        >
-                            Submit
-                        </Button>
+                        <Referal />
                     </Grid>
-                    <Grid item xs={12}>
-                        <Button
-                            type="submit"
-                            fullWidth
-                            variant="contained"
-                            color="secondary"
-                            onClick={handleSkip}
-                        >
-                            Skip for now
-                        </Button>
-                    </Grid>
-                 </Grid>
-             </form>
-        </Container>
+                </Grid>
+
+         </Container>
+        </>
     )
 }
+
+export default Dashboard;
