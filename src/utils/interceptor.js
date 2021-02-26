@@ -6,6 +6,8 @@ const cancelTokens = {
   // apiName: [uuidToCancel]
 }
 
+const baseUrl = 'http://3.20.116.189';
+
 let authToken = '';
 
 if(window.localStorage) {
@@ -51,7 +53,7 @@ const interceptor =  (config) => {
   if (authToken) {
     headers['Authorization'] = `Token ${authToken}`
   }
-  return window.fetch(url, {
+  return window.fetch(`${baseUrl}${url}`, {
     ...config,
     mode: 'cors',
     redirect,
