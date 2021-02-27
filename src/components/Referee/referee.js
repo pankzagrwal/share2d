@@ -3,7 +3,6 @@ import {
     Button,
     Grid,
     Typography,
-    Divider,
     Avatar
 } from '@material-ui/core';
 
