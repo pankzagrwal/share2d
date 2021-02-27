@@ -5,6 +5,7 @@ import {
     Typography,
     Avatar
 } from '@material-ui/core';
+
 import { makeStyles } from '@material-ui/core/styles';
 
 
@@ -26,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
   },
   textMuted: {
     fontSize: '12px',
-    color: '#b5b5c3'
+    color: '#b5b5c3',
   },
   buttonBlock: {
     display: 'block'
@@ -42,6 +43,7 @@ const profilePicMap = {
   6: Six
 }
 
+
 const Prospect = () => {
   const classes = useStyles();
   const profile = Math.floor(Math.random() * 6) + 1;
@@ -55,15 +57,15 @@ const Prospect = () => {
       <Grid item container xs={8}  alignItems='center'>
         <Grid item container direction='row' alignItems='center'>
           <Typography variant='subtitle2'>
-            Ricky Hunt
+            Brad Simmons
           </Typography>
         </Grid>
         <Grid item container  className={classes.textMuted} direction='column'>
           <span>
-            Description goes here about the requirement
+            &#8377; 1234
           </span>
           <span>
-            Shop Name goes here
+            Pending
           </span>
         </Grid>
       </Grid>
@@ -71,18 +73,13 @@ const Prospect = () => {
   )
 }
 
-const Prospects = () => {
+const Referal = () => {
 
     return (
       <Grid container>
         <Grid item xs={12}>
           <Typography variant='h6' gutterBottom>
-            Current Prospects
-          </Typography>
-        </Grid>
-        <Grid item xs={12}>
-          <Typography variant='body2' gtterBottom>
-            Reach out to prospects before they reach
+            Referal Commission
           </Typography>
         </Grid>
         <Grid item xs={12}>
@@ -95,4 +92,4 @@ const Prospects = () => {
     )
 }
 
-export default Prospects;
+export default Referal;
