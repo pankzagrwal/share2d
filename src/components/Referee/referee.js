@@ -3,47 +3,94 @@ import {
     Button,
     Grid,
     Typography,
-    Divider 
+    Divider,
+    Avatar
 } from '@material-ui/core';
 
 
-const Prospect = () => {
+import { makeStyles } from '@material-ui/core/styles';
 
+
+import One from '../../assets/profile/1.jpg'
+import Two from '../../assets/profile/2.jpg'
+import Three from '../../assets/profile/3.jpg'
+import Four from '../../assets/profile/4.jpg'
+import Five from '../../assets/profile/5.jpg'
+import Six from '../../assets/profile/6.jpg'
+
+
+const useStyles = makeStyles((theme) => ({
+  container: {
+    marginTop: theme.spacing(3)
+  },
+  small: {
+    width: theme.spacing(4),
+    height: theme.spacing(4),
+  },
+  textMuted: {
+    fontSize: '12px',
+    color: '#b5b5c3',
+  },
+  buttonBlock: {
+    display: 'block'
+  },
+  pay: {
+    boxShadow: 'none',
+    backgroundColor: '#8950fc',
+    color: 'white',
+    fontSize: '12px',
+    marginRight: '12px'
+  },
+  netOff: {
+    boxShadow: 'none',
+    backgroundColor: '#f64e60',
+    color: 'white',
+    fontSize: '12px'
+  }
+}));
+
+const profilePicMap = {
+  1: One,
+  2: Two,
+  3: Three,
+  4: Four,
+  5: Five,
+  6: Six
+}
+
+
+const Prospect = () => {
+  const classes = useStyles();
+  const profile = Math.floor(Math.random() * 6) + 1;
   return (
-    <Grid container justify='center' alignItems='center' spacing={1}>
-      <Grid item xs={12}>
-        <Grid container direction="row" alignItems='center' spacing={1}>
-          <Grid item>
-            <Typography variant="subtitle2">
-              Name
-            </Typography>
-          </Grid>
-          <Grid item>
-            <Typography variant='overline'>
-                Pending
-            </Typography>
-          </Grid>
-        </Grid>
+    <Grid container alignItems='center' spacing={1} direction='row' className={classes.container}>
+      <Grid item xs={2}>
+        <Button href={'tel:9552530381'} className={classes.buttonBlock}>
+          <Avatar src={profilePicMap[profile]} className={classes.small}/>
+        </Button>
       </Grid>
-      <Grid container item xs={12} justify='space-between'>
-        <Grid item>
-          <Typography variant="caption">
-            500
+      <Grid item container xs={8}  alignItems='center' spacing={1}>
+        <Grid item container direction='row' alignItems='center'>
+          <Typography variant='subtitle2'>
+            Brad Simmons
           </Typography>
         </Grid>
-        <Grid item>
-          <Button size='small' variant='outlined' color='primary'>
+        <Grid item container>
+          <Button variant="contained" size='small' className={classes.pay}>
             Pay
           </Button>
-        </Grid>
-        <Grid item>
-          <Button size='small' variant='outlined' color='primary'>
-            Net off
+          <Button variant="contained" size='small' className={classes.netOff}>
+            Net Off
           </Button>
         </Grid>
       </Grid>
-      <Grid item xs={12}>
-        <Divider />
+      <Grid item container xs={2} alignItems='center'>
+        <Grid item>
+          &#8377; 1234
+        </Grid>
+        <Grid item className={classes.textMuted}>
+          Pending
+        </Grid>
       </Grid>
     </Grid>
   )
