@@ -155,12 +155,9 @@ export default function Login () {
                                     <Button size="small" variant="outlined" color="primary">Re-send OTP</Button>
                                 </Grid>
                             }
-                            {
-                                !isOTP &&
-                                <Grid>
-                                    <Button size="small" variant="outlined" color="primary" onClick={handleRegister}>Register</Button>
-                                </Grid>
-                            }
+                        </Grid>
+                        <Grid item xs={12}>
+                            <Button size="small" variant="outlined" color="primary" onClick={handleRegister}>Register</Button>
                         </Grid>
                     </Grid>
                     <Grid item xs={12}>
