@@ -3,8 +3,18 @@ import {
     Button,
     Grid,
     Typography,
-    Avatar
+    Avatar,
+    Collapse,
+    FormControlLabel,
+    RadioGroup,
+    Radio,
+    Paper,
+    InputBase,
+    Divider,
+    IconButton
 } from '@material-ui/core';
+import Send from '@material-ui/icons/Send';
+
 import { makeStyles } from '@material-ui/core/styles';
 
 
@@ -17,6 +27,13 @@ import Six from '../../assets/profile/6.jpg'
 
 
 const useStyles = makeStyles((theme) => ({
+  paper: {
+    padding: '2px 4px',
+    display: 'flex',
+    alignItems: 'center',
+    boxShadow: 'none',
+    height: '30px'
+  },
   container: {
     marginTop: theme.spacing(3)
   },
@@ -30,6 +47,12 @@ const useStyles = makeStyles((theme) => ({
   },
   buttonBlock: {
     display: 'block'
+  },
+  dot: {
+    textAlign: 'right',
+    fontSize: '20px',
+    fontWeight: 'bold',
+    color: '#b5b5c3',
   }
 }));
 
@@ -44,9 +67,14 @@ const profilePicMap = {
 
 const Prospect = () => {
   const classes = useStyles();
-  const profile = Math.floor(Math.random() * 6) + 1;
+  const profile = React.useMemo(() => Math.floor(Math.random() * 6) + 1, []);
+  const [isExpandable, setIsExpandable] = React.useState(false);
+  const [status, setStatus] = React.useState('')
+  const handleChange = (evt) => {
+    setStatus(evt.target.value)
+  }
   return (
-    <Grid container alignItems='center' spacing={1} direction='row' className={classes.container}>
+    <Grid container justify={'space-between'} alignItems='center' spacing={1} direction='row' className={classes.container}>
       <Grid item xs={2}>
         <Button href={'tel:9552530381'} className={classes.buttonBlock}>
           <Avatar src={profilePicMap[profile]} className={classes.small}/>
@@ -66,6 +94,36 @@ const Prospect = () => {
             Shop Name goes here
           </span>
         </Grid>
+      </Grid>
+      <Grid item xs={2} className={classes.dot} onClick={() => setIsExpandable(!isExpandable)}>
+        <span >...</span>
+      </Grid>
+      <Grid item xs={12}>
+        <Collapse in={isExpandable}>
+          <Grid container>
+            <Grid item xs={12}>
+              <RadioGroup name="status" value={status} onChange={handleChange} color='primary' row className={classes.radioGroup}>
+                <FormControlLabel value="notSold" control={<Radio size='small'/>} label="Not Sold" />
+                <FormControlLabel value="sold" control={<Radio size='small'/>} label="Sold" />
+              </RadioGroup>
+            </Grid>
+            {
+              status === 'sold' &&
+              <Grid item xs={6}>
+                  <Paper component="form" className={classes.paper}>
+                    <InputBase
+                      className={classes.input}
+                      placeholder="Sold Amount"
+                    />
+                    <Divider className={classes.divider} orientation="vertical" />
+                    <IconButton color="primary">
+                      <Send fontSize="small"/>
+                    </IconButton>
+                  </Paper>
+              </Grid>
+            }
+          </Grid>
+        </Collapse>
       </Grid>
     </Grid>
   )
@@ -90,6 +148,9 @@ const Prospects = () => {
           <Prospect />
           <Prospect />
           <Prospect />
+        </Grid>
+        <Grid item xs={10}>
+          <Button  color='primary'>View All</Button>
         </Grid>
       </Grid>
     )
