@@ -7,9 +7,26 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import reportWebVitals from './reportWebVitals';
 
-import { green, deepPurple } from '@material-ui/core/colors';
-
 const outerTheme = createMuiTheme({
+  overrides: {
+  MuiButton: {
+    root: {
+      borderRadius: 0,
+      boxShadow: 'none'
+    }
+  },
+  MuiFormControlLabel: {
+    label: {
+      fontSize: '12px',
+      color: '#b5b5c3'
+    }
+  },
+  MuiInputBase: {
+    root: {
+      fontSize: '12px'
+    }
+  }
+  },
   typography: {
     fontFamily: [
       'Poppins',
@@ -18,10 +35,11 @@ const outerTheme = createMuiTheme({
   },
   palette: {
     primary: {
-          main: deepPurple[500],
+          main: '#8950fc',
+          boxShadow: 'none'
         },
         secondary: {
-          main: green[500],
+          main: '#f64e60',
         },
   },
 });
