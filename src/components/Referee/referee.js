@@ -75,10 +75,10 @@ const Prospect = () => {
           </Typography>
         </Grid>
         <Grid item container>
-          <Button variant="contained" size='small' className={classes.pay}>
+          <Button variant="contained" size='small' className={classes.pay} color='primary'>
             Pay
           </Button>
-          <Button variant="contained" size='small' className={classes.netOff}>
+          <Button variant="contained" size='small' className={classes.netOff} color='secondary'>
             Net Off
           </Button>
         </Grid>
@@ -109,6 +109,9 @@ const Referee = () => {
           <Prospect />
           <Prospect />
           <Prospect />
+        </Grid>
+        <Grid item xs={10}>
+          <Button  color='primary'>View All</Button>
         </Grid>
       </Grid>
     )
