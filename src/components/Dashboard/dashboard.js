@@ -57,10 +57,11 @@ const useStyles = makeStyles((theme) => ({
 const Dashboard = () => {
     const classes = useStyles();
     const history = useHistory();
-
     const handleRefer = () => {
         history.push("/ReferBuddy");
     }
+
+
     return (
         <>
         <Grid container className={classes.backgroundContainer}>
@@ -131,7 +132,7 @@ const Dashboard = () => {
                     <Grid item xs={12}>
                         <CurrentProspects />
                     </Grid>
-                    <Grid item xs={12}>
+                    <Grid item xs={12} >
                         <Referee />
                     </Grid>
                     <Grid item xs={12}>
