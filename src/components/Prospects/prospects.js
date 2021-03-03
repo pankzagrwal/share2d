@@ -53,6 +53,9 @@ const useStyles = makeStyles((theme) => ({
     fontSize: '20px',
     fontWeight: 'bold',
     color: '#b5b5c3',
+  },
+  collapse: {
+    marginLeft: theme.spacing(7)
   }
 }));
 
@@ -98,9 +101,9 @@ const Prospect = () => {
       <Grid item xs={2} className={classes.dot} onClick={() => setIsExpandable(!isExpandable)}>
         <span >...</span>
       </Grid>
-      <Grid item xs={12}>
+      <Grid item xs={10}>
         <Collapse in={isExpandable}>
-          <Grid container>
+          <Grid container className={classes.collapse}>
             <Grid item xs={12}>
               <RadioGroup name="status" value={status} onChange={handleChange} color='primary' row className={classes.radioGroup}>
                 <FormControlLabel value="notSold" control={<Radio size='small'/>} label="Not Sold" />
