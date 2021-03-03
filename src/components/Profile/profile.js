@@ -78,6 +78,16 @@ export default function Profile () {
                     </Grid>
                     <Grid item xs={12}>
                         <TextField
+                            name="shopName"
+                            variant="outlined"
+                            type="text"
+                            required
+                            fullWidth
+                            label="Shop Name"
+                        />
+                    </Grid>
+                    <Grid item xs={12}>
+                        <TextField
                             name="address"
                             variant="outlined"
                             type="text"
@@ -90,19 +100,19 @@ export default function Profile () {
                     <Grid item xs={12}>
                         <Grid container alignItems='center' justify='space-between'>
                             <Grid item>
-                                <Button variant="outlined" color="primary" endIcon={<PinDrop />} onClick={getGeoLocation}>
+                                <Button variant="outlined" color="primary" endIcon={<PinDrop />} onClick={getGeoLocation} size='small'>
                                     Refresh Location
                                 </Button>
                             </Grid>
                             <Grid item>
-                                <Button size='small' href={`https://www.google.com/maps/search/?api=1&query=28.5078595,77.0683169`} color="primary" target='_blank' endIcon={<NavigationIcon />}>
+                                <Button size='small' href={`https://www.google.com/maps/search/?api=1&query=28.5078595,77.0683169`} color="secondary" target='_blank' endIcon={<NavigationIcon />}>
                                     My Location
                                 </Button>
                             </Grid>
                         </Grid>
                     </Grid>
                     <Grid item xs={12}>
-                        <Button variant='outlined' color='primary' onClick={handleUpdateOffer}>
+                        <Button variant='outlined' color='primary' onClick={handleUpdateOffer} size='small'>
                             Update Offer
                         </Button>
                     </Grid>
@@ -114,16 +124,6 @@ export default function Profile () {
                             color="primary"
                         >
                             Save
-                        </Button>
-                    </Grid>
-                    <Grid item xs={12}>
-                        <Button
-                            type="submit"
-                            fullWidth
-                            variant="contained"
-                            color="secondary"
-                        >
-                            Reset
                         </Button>
                     </Grid>
                  </Grid>
