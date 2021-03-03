@@ -3,17 +3,22 @@ import {
     Button,
     Container,
     Grid,
-    Checkbox,
-    TextField,
+    Paper,
+    InputBase,
+    Divider,
+    IconButton,
+    Switch,
+    Typography
 } from '@material-ui/core';
-import StoreIcon from '@material-ui/icons/Store';
+import SearchIcon from '@material-ui/icons/Search';
+import FilterListIcon from '@material-ui/icons/FilterList';
 import StoreList from '../StoreList/storeList'
 import IndustryDialog from './industryDialog';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
-    marginTop: theme.spacing(8),
+    marginTop: theme.spacing(3),
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -23,48 +28,69 @@ const useStyles = makeStyles((theme) => ({
   },
   search: {
       paddingBottom: theme.spacing(2)
+  },
+  root: {
+    padding: '2px 4px',
+    display: 'flex',
+    alignItems: 'center',
+    border: '1px solid #b5b5c3',
+    boxShadow: 'none',
+    position: 'sticky',
+    top: '0'
+  },
+  input: {
+    marginLeft: theme.spacing(1),
+    flex: 1,
+  },
+  iconButton: {
+    padding: 10,
+  },
+  divider: {
+    height: 28,
+    margin: 4,
+  },
+  popularity: {
+      fontSize: '12px',
+      color: '#b5b5c3'
   }
 }));
 
 export default function ReferBuddy() {
     const classess = useStyles()
-    const [isIndustryOpen, setIsIndustryOpen] = React.useState(false)
+    const [isIndustryOpen, setIsIndustryOpen] = React.useState(false);
+    const [isPopularity, setIsPopularity] = React.useState(false);
     return (
         <>
             <Container maxWidth='xs' justify='center' className={classess.paper}>
+                <Grid container spacing={4} direction='column' className={classess.search}>
+                    <Grid item xs={12}>
+                        <Paper component="form" className={classess.root}>
+                        <InputBase
+                            className={classess.input}
+                            placeholder="Search Stores"
+                        />
+                        <Divider className={classess.divider} orientation="vertical" />
+                        <IconButton color="primary" type="submit" className={classess.iconButton} aria-label="search">
+                            <SearchIcon />
+                        </IconButton>
+                        </Paper>
+                    </Grid>
+                </Grid>
                 <Grid container spacing={3} justify='space-between' alignItems="center" className={classess.industry}>
                     <Grid item>
-                        Industry: {'XYZ'}
-                    </Grid>
-                    <Grid item>
-                        <Button variant="outlined" color="primary" size="small" onClick={() => {setIsIndustryOpen(true)}}>
-                            Change Industry
+                        <Button variant="outlined" color="primary" size="small" onClick={() => {setIsIndustryOpen(true)}} endIcon={<FilterListIcon />}>
+                            Automobile
                         </Button>
                     </Grid>
-                </Grid>
-                <Grid container spacing={2} alignItems="center">
                     <Grid item>
-                        Search on popularity
-                    </Grid>
-                    <Grid Item>
-                        <Checkbox color="primary" />
-                    </Grid>
-                </Grid>
-                <Grid container spacing={4} direction='column' className={classess.search}>
-                    <Grid item>
-                        <Grid container spacing={1} alignItems="flex-end">
-                            <Grid item>
-                                <StoreIcon />
-                            </Grid>
-                            <Grid item>
-                                <TextField id="input-with-icon-grid" label="Search Store" />
-                            </Grid>
-                            <Grid item>
-                                <Button variant="contained" color="primary" size="small">
-                                    Search
-                                </Button>
-                            </Grid>
+                    <Typography component="div">
+                        <Grid component="label" container alignItems="center" spacing={1}>
+                        <Grid item>
+                            <Switch size='small' checked={isPopularity} onChange={() => {setIsPopularity(!isPopularity)}} name="checkedC" />
                         </Grid>
+                        <Grid item className={classess.popularity}>Popularity</Grid>
+                        </Grid>
+                    </Typography>
                     </Grid>
                 </Grid>
                 <StoreList />
