@@ -40,7 +40,7 @@ export default function AddOffer () {
     const dispatch = useDispatch();
     const history = useHistory();
     const [industry, setIndustry] = React.useState('')
-    const [industries, setIndustries] = React.useState([])
+    // const [industries, setIndustries] = React.useState([])
     const [geoPosition, setGeoPosition] = React.useState({});
     const [commission, setCommission] = React.useState('');
     const [commissionType, setCommissionType] = React.useState('flat');
