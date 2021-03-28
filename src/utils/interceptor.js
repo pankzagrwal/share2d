@@ -104,7 +104,7 @@ const interceptor =  (config) => {
       }
       return data.then((data) => {
         if (apiName === 'login') {
-          authToken = data?.data?.token ?? '';
+          authToken = data?.token ?? '';
           window.localStorage && localStorage.setItem('authToken', authToken);
         }
         return { config, data, status, cancelled }
