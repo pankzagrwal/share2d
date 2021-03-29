@@ -17,6 +17,15 @@ import IndustryDialog from './industryDialog';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
+    backgroundContainer: {
+      backgroundColor: '#f64e60',
+      height: '50px',
+      marginBottom: '25px',
+      color: 'white',
+  },
+  name: {
+      padding: theme.spacing(1)
+  },
   paper: {
     marginTop: theme.spacing(3),
     display: 'flex',
@@ -61,6 +70,17 @@ export default function ReferBuddy() {
     const [isPopularity, setIsPopularity] = React.useState(false);
     return (
         <>
+        <Grid container className={classess.backgroundContainer}>
+            <Grid item xs={12}>
+                <Grid container justify='space-between'>
+                    <Grid item>
+                        <Typography variant="h6" className={classess.name}>
+                           Stores
+                        </Typography>
+                    </Grid>
+                </Grid>
+            </Grid>
+        </Grid>
             <Container maxWidth='xs' justify='center' className={classess.paper}>
                 <Grid container spacing={4} direction='column' className={classess.search}>
                     <Grid item xs={12}>
