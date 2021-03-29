@@ -12,6 +12,7 @@ import AddOffer from './components/AddOffer/addOffer.js';
 import Profile from './components/Profile/profile.js'
 import ReferBuddy from './components/ReferBuddy/referBuddy.js';
 import Login from './components/Login/login.js';
+import AllCommmission from './components/AllCommission/allCommission.js'
 
 const RouteWrapper = ({component: Component, ...rest}) => {
   const authToken = window.localStorage && localStorage.getItem('authToken')
@@ -37,6 +38,7 @@ export default function Routes() {
           <RouteWrapper component={Profile} path='/profile'  exact/>
           <RouteWrapper component={ReferBuddy} path='/referBuddy'  exact/>
           <RouteWrapper component={Dashboard} path='/'  exact/>
+          <RouteWrapper component={AllCommmission} path='/allCommissions' exact />
           <Route exact path="/login">
             <Login />
           </Route>
