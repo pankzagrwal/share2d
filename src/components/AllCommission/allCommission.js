@@ -1,21 +1,10 @@
 import React from 'react';
 import {
     Container,
-    Button,
     Grid,
     Typography,
-    Avatar,
-    Collapse,
-    FormControlLabel,
-    RadioGroup,
-    Radio,
-    Paper,
-    InputBase,
-    Divider,
-    IconButton,
     Tabs,
     Tab,
-    FormControl,
     NativeSelect
 } from '@material-ui/core';
 
