@@ -7,10 +7,20 @@ import Container from '@material-ui/core/Container';
 import { makeStyles } from '@material-ui/core/styles';
 import PinDrop from '@material-ui/icons/PinDrop';
 import NavigationIcon from '@material-ui/icons/Navigation';
+import Typography from '@material-ui/core/Typography';
 
 
 
 const useStyles = makeStyles((theme) => ({
+backgroundContainer: {
+      backgroundColor: '#f64e60',
+      height: '50px',
+      marginBottom: '25px',
+      color: 'white',
+  },
+  name: {
+      padding: theme.spacing(1)
+  },
   paper: {
     marginTop: theme.spacing(8),
     display: 'flex',
@@ -53,7 +63,19 @@ export default function Profile () {
          history.push("/addOffer");
     }
     return (
-         <Container maxWidth='xs' justify='center' className={classes.paper}>
+        <>
+            <Grid container className={classes.backgroundContainer}>
+            <Grid item xs={12}>
+                <Grid container justify='space-between'>
+                    <Grid item>
+                        <Typography variant="h6" className={classes.name}>
+                           My Profile
+                        </Typography>
+                    </Grid>
+                </Grid>
+            </Grid>
+        </Grid>
+                 <Container maxWidth='xs' justify='center' className={classes.paper}>
             <form onSubmit={()=>{}} autoComplete='off'>
                  <Grid container spacing={2} alignItems='center' justify='center'>
                     <Grid item xs={12}>
@@ -129,5 +151,7 @@ export default function Profile () {
                  </Grid>
             </form>
          </Container>
+
+        </>
     )
 }
