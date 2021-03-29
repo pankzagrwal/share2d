@@ -4,14 +4,6 @@ import {
     Grid,
     Typography,
     Avatar,
-    Collapse,
-    FormControlLabel,
-    RadioGroup,
-    Radio,
-    Paper,
-    InputBase,
-    Divider,
-    IconButton,
     Tabs,
     Tab
 } from '@material-ui/core';
