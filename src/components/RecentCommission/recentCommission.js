@@ -83,7 +83,9 @@ const profilePicMap = {
 }
 
 export const CommissionGive = ({
-    status = 'pending'
+    name='Brad Simmons',
+    status = 'pending',
+    isStore
 }) => {
     const classes = useStyles();
     const profile = Math.floor(Math.random() * 6) + 1;
@@ -97,14 +99,17 @@ export const CommissionGive = ({
             <Grid item container xs={8}  alignItems='center'>
                 <Grid item container direction='row' alignItems='center'>
                     <Typography variant='subtitle2'>
-                        Brad Simmons
+                        {name}
                     </Typography>
                 </Grid>
-                <Grid item  direction='row' alignItems='center'>
-                    <Typography variant='caption'>
-                        Referred By: AAA Industires
-                    </Typography>
-                </Grid>
+                {
+                  !isStore &&
+                  <Grid item  direction='row' alignItems='center'>
+                      <Typography variant='caption'>
+                          Referred By: AAA Industires
+                      </Typography>
+                  </Grid>
+                }
                 {
                     status === 'pending' &&
                     <Grid item container className={classes.actionItem}>
@@ -133,7 +138,9 @@ export const CommissionGive = ({
 }
 
 export const CommissionReceive = ({
-    status = 'pending'
+    name = 'Brad Simmons',
+    status = 'pending',
+    isStore
 }) => {
     const classes = useStyles();
     const profile = Math.floor(Math.random() * 6) + 1;
@@ -147,14 +154,17 @@ export const CommissionReceive = ({
         <Grid item container xs={8}  alignItems='center'>
             <Grid item container direction='row' alignItems='center'>
             <Typography variant='subtitle2'>
-                Brad Simmons
+                {name}
             </Typography>
             </Grid>
-            <Grid item container direction='row' alignItems='center'>
-            <Typography variant='caption'>
-               Reffered to: ERT Industires
-            </Typography>
-            </Grid>
+            {
+              !isStore &&
+              <Grid item container direction='row' alignItems='center'>
+                <Typography variant='caption'>
+                  Reffered to: ERT Industires
+                </Typography>
+              </Grid>
+            }
             <Grid item container  className={classes.textMuted} direction='column'>
             <span>
                 &#8377; 1234
