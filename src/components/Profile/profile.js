@@ -1,13 +1,17 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
-import Grid from '@material-ui/core/Grid';
-import Container from '@material-ui/core/Container';
+// import { useHistory } from "react-router-dom";
 import { makeStyles } from '@material-ui/core/styles';
 import PinDrop from '@material-ui/icons/PinDrop';
 import NavigationIcon from '@material-ui/icons/Navigation';
-import Typography from '@material-ui/core/Typography';
+import {
+    Container,
+    TextField,
+    Button,
+    Grid,
+    Typography,
+    Tabs,
+    Tab
+} from '@material-ui/core';
 
 
 
@@ -40,9 +44,15 @@ backgroundContainer: {
 
 export default function Profile () {
     const classes = useStyles();
-    const history = useHistory();
+    // const history = useHistory();
 
     const [geoPosition, setGeoPosition] = React.useState({});
+
+    const [tabId, setTabId] = React.useState(0);
+
+    const  handleChange = (evt, value) => {
+      setTabId(value)
+    }
 
 
     const getGeoLocation = () => {
@@ -59,9 +69,9 @@ export default function Profile () {
         }
 
     }
-    const handleUpdateOffer = () => {
-         history.push("/addOffer");
-    }
+    // const handleUpdateOffer = () => {
+    //      history.push("/addOffer");
+    // }
     return (
         <>
             <Grid container className={classes.backgroundContainer}>
@@ -75,8 +85,94 @@ export default function Profile () {
                 </Grid>
             </Grid>
         </Grid>
-                 <Container maxWidth='xs' justify='center' className={classes.paper}>
-            <form onSubmit={()=>{}} autoComplete='off'>
+        <Container maxWidth='xs' justify='center' className={classes.paper} >
+            <Grid container spacing={2}>
+                <Grid item xs={12}>
+                    <Tabs value={tabId} onChange={handleChange}>
+                        <Tab label="Personal Details"  id = {0} />
+                        <Tab label="Store Details"  id = {1} />
+                        <Tab label="Offers" id = {2} />
+                    </Tabs>
+                </Grid>
+                {
+                    tabId === 0 &&
+                    <Grid item xs={12}>
+                         <form onSubmit={()=>{}} autoComplete='off'>
+                             <Grid container spacing={2} alignItems='center' justify='center'>
+                                <Grid item xs={12}>
+                                    <TextField
+                                        name="name"
+                                        variant="outlined"
+                                        type="text"
+                                        required
+                                        fullWidth
+                                        label="Name"
+                                    />
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <TextField
+                                        name="mobileNumber"
+                                        variant="outlined"
+                                        type="number"
+                                        required
+                                        fullWidth
+                                        label="Mobile Number"
+                                    />
+                                </Grid>
+                             </Grid>
+                         </form>
+                    </Grid>
+                    }
+
+                    {
+                    tabId === 1 &&
+                    <Grid item xs={12}>
+                         <form onSubmit={()=>{}} autoComplete='off'>
+                             <Grid container spacing={2} alignItems='center' justify='center'>
+                                <Grid item xs={12}>
+                                    <TextField
+                                        name="shopName"
+                                        variant="outlined"
+                                        type="text"
+                                        required
+                                        fullWidth
+                                        label="Shop Name"
+                                    />
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <TextField
+                                        name="address"
+                                        variant="outlined"
+                                        type="text"
+                                        multiline
+                                        required
+                                        fullWidth
+                                        label="Address"
+                                    />
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <Grid container alignItems='center' justify='space-between'>
+                                        <Grid item>
+                                            <Button variant="outlined" color="primary" endIcon={<PinDrop />} onClick={getGeoLocation} size='small'>
+                                                Refresh Location
+                                            </Button>
+                                        </Grid>
+                                        <Grid item>
+                                            <Button size='small' href={`https://www.google.com/maps/search/?api=1&query=28.5078595,77.0683169`} color="secondary" target='_blank' endIcon={<NavigationIcon />}>
+                                                My Location
+                                            </Button>
+                                        </Grid>
+                                    </Grid>
+                                </Grid>
+                             </Grid>
+                         </form>
+                    </Grid>
+                    }
+            </Grid>
+
+
+
+            {/* <form onSubmit={()=>{}} autoComplete='off'>
                  <Grid container spacing={2} alignItems='center' justify='center'>
                     <Grid item xs={12}>
                         <TextField
@@ -149,7 +245,7 @@ export default function Profile () {
                         </Button>
                     </Grid>
                  </Grid>
-            </form>
+            </form> */}
          </Container>
 
         </>
