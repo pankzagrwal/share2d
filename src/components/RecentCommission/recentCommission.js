@@ -70,6 +70,10 @@ const useStyles = makeStyles((theme) => ({
     },
     actionItem: {
         marginTop: theme.spacing(2)
+    },
+    callText: {
+      padding: 0,
+      textTransform: 'none'
     }
 }));
 
@@ -83,7 +87,7 @@ const profilePicMap = {
 }
 
 export const CommissionGive = ({
-    name='Brad Simmons',
+    name='Merchant Name',
     status = 'pending',
     isStore
 }) => {
@@ -98,16 +102,21 @@ export const CommissionGive = ({
             </Grid>
             <Grid item container xs={8}  alignItems='center'>
                 <Grid item container direction='row' alignItems='center'>
+                <Button href={'tel:9552530381'} className={classes.callText}>
                     <Typography variant='subtitle2'>
                         {name}
                     </Typography>
+                  </Button>
                 </Grid>
                 {
                   !isStore &&
                   <Grid item  direction='row' alignItems='center'>
+                  <Button href={'tel:9552530381'} className={classes.callText}>
                       <Typography variant='caption'>
-                          Referred By: AAA Industires
+                          {/* Referred By: AAA Industires */}
+                          Customer name
                       </Typography>
+                    </Button>
                   </Grid>
                 }
                 {
@@ -138,14 +147,15 @@ export const CommissionGive = ({
 }
 
 export const CommissionReceive = ({
-    name = 'Brad Simmons',
+    name = 'Merchant Name',
     status = 'pending',
-    isStore
+    isStore,
+    onClick = () => {}
 }) => {
     const classes = useStyles();
     const profile = Math.floor(Math.random() * 6) + 1;
     return (
-        <Grid container alignItems='center' spacing={1} direction='row' className={classes.container}>
+        <Grid container alignItems='center' spacing={1} direction='row' className={classes.container} onClick={onClick}>
         <Grid item xs={2}>
             <Button href={'tel:9552530381'} className={classes.buttonBlock}>
             <Avatar src={profilePicMap[profile]} className={classes.small}/>
@@ -153,16 +163,20 @@ export const CommissionReceive = ({
         </Grid>
         <Grid item container xs={8}  alignItems='center'>
             <Grid item container direction='row' alignItems='center'>
-            <Typography variant='subtitle2'>
-                {name}
-            </Typography>
+            <Button href={'tel:9552530381'} className={classes.callText}>
+              <Typography variant='subtitle2'>
+                  {name}
+              </Typography>
+            </Button>
             </Grid>
             {
               !isStore &&
               <Grid item container direction='row' alignItems='center'>
+              <Button href={'tel:9552530381'} className={classes.callText}>
                 <Typography variant='caption'>
-                  Reffered to: ERT Industires
+                  Customer Name
                 </Typography>
+              </Button>
               </Grid>
             }
             <Grid item container  className={classes.textMuted} direction='column'>
