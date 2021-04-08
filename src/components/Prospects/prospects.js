@@ -16,6 +16,7 @@ import {
     Tab
 } from '@material-ui/core';
 import Send from '@material-ui/icons/Send';
+import SmartphoneIcon from '@material-ui/icons/Smartphone';
 
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -58,7 +59,20 @@ const useStyles = makeStyles((theme) => ({
   },
   collapse: {
     marginLeft: theme.spacing(7)
-  }
+  },
+    pay: {
+    boxShadow: 'none',
+    backgroundColor: '#8950fc',
+    color: 'white',
+    fontSize: '12px',
+    marginRight: '12px'
+  },
+  netOff: {
+    boxShadow: 'none',
+    backgroundColor: '#f64e60',
+    color: 'white',
+    fontSize: '12px'
+  },
 }));
 
 const profilePicMap = {
@@ -88,7 +102,7 @@ const ProspectComing = () => {
       <Grid item container xs={8}  alignItems='center'>
         <Grid item container direction='row' alignItems='center'>
           <Typography variant='subtitle2'>
-            Ricky Hunt
+            Customer Name
           </Typography>
         </Grid>
         <Grid item container  className={classes.textMuted} direction='column'>
@@ -96,7 +110,7 @@ const ProspectComing = () => {
             Description goes here about the requirement
           </span>
           <span>
-            Refered by: ABC Industries
+            Refered by: Merchant Name
           </span>
         </Grid>
       </Grid>
@@ -127,6 +141,14 @@ const ProspectComing = () => {
                     </Paper>
                 </Grid>
               }
+                <Grid item container className={classes.actionItem}>
+                    <Button variant="contained" size='small' className={classes.pay} color='primary' startIcon={<SmartphoneIcon />}>
+                        Customer 
+                    </Button>
+                    <Button variant="contained" size='small' className={classes.netOff} color='secondary ' startIcon={<SmartphoneIcon />}>
+                        Merchant 
+                    </Button>
+                </Grid>
             </Grid>
           </Collapse>
         </Grid>
@@ -147,7 +169,7 @@ const ProspectSent = () => {
       <Grid item container xs={10}  alignItems='center'>
         <Grid item container direction='row' alignItems='center'>
           <Typography variant='subtitle2'>
-            Ricky Ponting
+            Customer Name
           </Typography>
         </Grid>
         <Grid item container  className={classes.textMuted} direction='column'>
@@ -155,7 +177,7 @@ const ProspectSent = () => {
             Description goes here about the requirement
           </span>
           <span>
-            Referred To: XYZ Industries
+            Referred To: Merchant Name
           </span>
         </Grid>
       </Grid>
