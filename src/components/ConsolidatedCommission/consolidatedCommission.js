@@ -14,6 +14,7 @@ import {
 
 
 import { makeStyles } from '@material-ui/core/styles';
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   backgroundContainer: {
@@ -30,14 +31,34 @@ const useStyles = makeStyles((theme) => ({
   },
   container: {
       marginBottom: '65px'
-  }
+  },
+    pay: {
+    boxShadow: 'none',
+    backgroundColor: '#8950fc',
+    color: 'white',
+    fontSize: '12px',
+    marginRight: '12px'
+  },
+  netOff: {
+    boxShadow: 'none',
+    backgroundColor: '#f64e60',
+    color: 'white',
+    fontSize: '12px'
+  },
+    actionItem: {
+        marginTop: theme.spacing(2)
+    }
 }));
 
 const ConsolidatedCommission = () => {
     const [tabId, setTabId] = React.useState(0);
-    const classes = useStyles()
+    const classes = useStyles();
+    const history = useHistory();
     const  handleChange = (evt, value) => {
       setTabId(value)
+    }
+    const clickHandle = (id, store) => {
+        history.push(`/allCommissions?store=${id}`);
     }
     return (
 
@@ -74,7 +95,9 @@ const ConsolidatedCommission = () => {
                     {
                     tabId === 0 &&
                     <Grid item xs={12}>
-                        <CommissionReceive isStore name='ABC Enterprise'/>
+                        <CommissionReceive isStore name='ABC Enterprise' onClick={() => {
+                            clickHandle(1)
+                        }} />
                         <CommissionGive isStore name='XYZ Enterprise'/>
                         <CommissionGive isStore name='share2D'/>
                     </Grid>
