@@ -15,7 +15,7 @@ const path = [
     '/',
     '/profile',
     '/ReferBuddy',
-    '/allCommissions'
+    '/consolidatedCommission'
 ]
 
 const useStyles = makeStyles({
