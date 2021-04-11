@@ -13,6 +13,7 @@ import {
     Tab
 } from '@material-ui/core';
 
+import AddOffer from '../AddOffer/addOffer.js'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -90,8 +91,7 @@ export default function Profile () {
                 <Grid item xs={12}>
                     <Tabs value={tabId} onChange={handleChange}>
                         <Tab label="Personal Details"  id = {0} />
-                        <Tab label="Store Details"  id = {1} />
-                        <Tab label="Offers" id = {2} />
+                        <Tab label="Offers" id = {1} />
                     </Tabs>
                 </Grid>
                 {
@@ -119,16 +119,6 @@ export default function Profile () {
                                         label="Mobile Number"
                                     />
                                 </Grid>
-                             </Grid>
-                         </form>
-                    </Grid>
-                    }
-
-                    {
-                    tabId === 1 &&
-                    <Grid item xs={12}>
-                         <form onSubmit={()=>{}} autoComplete='off'>
-                             <Grid container spacing={2} alignItems='center' justify='center'>
                                 <Grid item xs={12}>
                                     <TextField
                                         name="shopName"
@@ -164,88 +154,26 @@ export default function Profile () {
                                         </Grid>
                                     </Grid>
                                 </Grid>
+                                <Grid item xs={12}>
+                                    <Button
+                                        type="submit"
+                                        fullWidth
+                                        variant="contained"
+                                        color="primary"
+                                        className={classes.button}
+                                    >
+                                        Submit
+                                    </Button>
+                                </Grid>
                              </Grid>
                          </form>
                     </Grid>
                     }
+                    {
+                        tabId === 1 &&
+                        <AddOffer />
+                    }
             </Grid>
-
-
-
-            {/* <form onSubmit={()=>{}} autoComplete='off'>
-                 <Grid container spacing={2} alignItems='center' justify='center'>
-                    <Grid item xs={12}>
-                        <TextField
-                            name="name"
-                            variant="outlined"
-                            type="text"
-                            required
-                            fullWidth
-                            label="Name"
-                        />
-                    </Grid>
-                    <Grid item xs={12}>
-                        <TextField
-                            name="mobileNumber"
-                            variant="outlined"
-                            type="number"
-                            required
-                            fullWidth
-                            label="Mobile Number"
-                        />
-                    </Grid>
-                    <Grid item xs={12}>
-                        <TextField
-                            name="shopName"
-                            variant="outlined"
-                            type="text"
-                            required
-                            fullWidth
-                            label="Shop Name"
-                        />
-                    </Grid>
-                    <Grid item xs={12}>
-                        <TextField
-                            name="address"
-                            variant="outlined"
-                            type="text"
-                            multiline
-                            required
-                            fullWidth
-                            label="Address"
-                        />
-                    </Grid>
-                    <Grid item xs={12}>
-                        <Grid container alignItems='center' justify='space-between'>
-                            <Grid item>
-                                <Button variant="outlined" color="primary" endIcon={<PinDrop />} onClick={getGeoLocation} size='small'>
-                                    Refresh Location
-                                </Button>
-                            </Grid>
-                            <Grid item>
-                                <Button size='small' href={`https://www.google.com/maps/search/?api=1&query=28.5078595,77.0683169`} color="secondary" target='_blank' endIcon={<NavigationIcon />}>
-                                    My Location
-                                </Button>
-                            </Grid>
-                        </Grid>
-                    </Grid>
-                    <Grid item xs={12}>
-                        <Button variant='outlined' color='primary' onClick={handleUpdateOffer} size='small'>
-                            Update Offer
-                        </Button>
-                    </Grid>
-                    <Grid item xs={12}>
-                        <Button
-                            type="submit"
-                            fullWidth
-                            variant="contained"
-                            color="primary"
-                        >
-                            Save
-                        </Button>
-                    </Grid>
-                 </Grid>
-            </form> */}
          </Container>
 
         </>
