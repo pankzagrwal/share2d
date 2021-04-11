@@ -1,4 +1,5 @@
 import React from 'react';
+import { useDispatch } from 'react-redux'
 import {
     Container,
     Grid,
@@ -13,6 +14,8 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import CurrentProspects from '../Prospects/prospects.js';
 import RecentCommission from '../RecentCommission/recentCommission.js';
+
+import { getLead } from './actions.js'
 
 const useStyles = makeStyles((theme) => ({
   backgroundContainer: {
@@ -59,7 +62,16 @@ const Dashboard = () => {
     const handleRefer = () => {
         history.push("/ReferBuddy");
     }
+    const dispatch = useDispatch();
 
+    React.useEffect(() => {
+        dispatch(getLead({
+            type: 'bussiness'
+        }))
+        dispatch(getLead({
+            type: 'promoter'
+        }))
+    }, [dispatch])
 
     return (
         <>
