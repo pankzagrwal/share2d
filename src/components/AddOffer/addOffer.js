@@ -1,44 +1,44 @@
 import React from "react";
 import { useDispatch, useSelector } from 'react-redux'
-import { useHistory } from "react-router-dom";
 import {
     Button,
     MenuItem,
     Container,
     TextField,
     FormControl,
-    Typography,
     Grid,
     FormLabel,
     RadioGroup,
     FormControlLabel,
     Radio
 } from '@material-ui/core'
+
 import { makeStyles } from '@material-ui/core/styles';
 import {getIndustries} from './actions.js';
 
 const useStyles = makeStyles((theme) => ({
-  paper: {
-    marginTop: theme.spacing(8),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
+//   paper: {
+//     marginTop: theme.spacing(8),
+//     display: 'flex',
+//     flexDirection: 'column',
+//     alignItems: 'center',
+//   },
   form: {
     width: '100%',
-    marginTop: theme.spacing(3),
   },
   textField: {
       width: '100%',
       marginTop:  theme.spacing(2),
       marginBottom:  theme.spacing(2)
+  },
+  button: {
+      boxShadow: 'none'
   }
 }));
 
 export default function AddOffer () {
     const classes = useStyles();
     const dispatch = useDispatch();
-    const history = useHistory();
     const [industry, setIndustry] = React.useState('')
     // const [industries, setIndustries] = React.useState([])
     const [geoPosition, setGeoPosition] = React.useState({});
@@ -73,11 +73,6 @@ export default function AddOffer () {
 
     }
 
-    const handleSkip = () => {
-        history.push("/");
-    }
-
-
     const handleSubmit = (evt) => {
         evt.preventDefault();
         evt.stopPropagation();
@@ -92,9 +87,9 @@ export default function AddOffer () {
 
     return (
         <Container maxWidth='xs' justify='center' className={classes.paper}>
-            <Typography variant="h4" component="h2" gutterBottom>
+            {/* <Typography variant="h4" component="h2" gutterBottom>
                 Add Offer
-            </Typography>
+            </Typography> */}
              <form onSubmit={handleSubmit} autoComplete='off' className={classes.form}>
                  <Grid container spacing={2} alignItems='center' justify='center'>
                     <Grid item xs={12}>
@@ -142,19 +137,9 @@ export default function AddOffer () {
                             fullWidth
                             variant="contained"
                             color="primary"
+                            className={classes.button}
                         >
                             Submit
-                        </Button>
-                    </Grid>
-                    <Grid item xs={12}>
-                        <Button
-                            type="submit"
-                            fullWidth
-                            variant="contained"
-                            color="secondary"
-                            onClick={handleSkip}
-                        >
-                            Skip for now
                         </Button>
                     </Grid>
                  </Grid>
