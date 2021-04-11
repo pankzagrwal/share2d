@@ -20,6 +20,7 @@ export const postRegistration = (payload) => async (dispatch) => {
     const { status } = await interceptor({
         url: '/accounts/registration',
         method: 'POST',
+        apiName: 'signup',
         body: data
     })
     if (status === 201) {
