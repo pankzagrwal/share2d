@@ -1,4 +1,5 @@
 import React from "react";
+import { useDispatch } from 'react-redux'
 import {
     List,
     ListItem 
@@ -8,6 +9,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import LeadDialog from '../LeadDialog/leadDialog';
 
 import Store from './Store/store'
+import {getStores} from './actions.js'
 
 const useStyles = makeStyles((theme) => ({
   list: {
@@ -23,6 +25,7 @@ export default function StoreList ({
     const classes = useStyles();
     const loader = React.useRef();
     const [selectedStore, setSelectedStore] = React.useState({})
+    const dispatch = useDispatch();
 
     React.useEffect(() => {
         var options = {
@@ -35,6 +38,10 @@ export default function StoreList ({
             observer.observe(loader.current)
          }
     }, []);
+
+    React.useEffect(() => {
+        dispatch(getStores({}))
+    }, [dispatch])
 
     const handleObserver = (entities) => {
         const target = entities[0];
