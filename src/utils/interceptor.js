@@ -41,6 +41,10 @@ const interceptor =  (config) => {
     disableContentType = false
   } = config
   const token = Date.now()
+  if (apiName === 'signup') {
+    authToken = '';
+    window.localStorage && localStorage.setItem('authToken', '')
+  }
   if (apiName) {
     if (cancelPrevious) {
       cancel(apiName)
