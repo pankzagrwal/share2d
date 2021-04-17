@@ -22,6 +22,11 @@ export const user = (state = {}, action) => {
                 ...state,
                 registration: true
             }
+        case 'SET_PROFILE':
+            return {
+                ...state,
+                ...action.payload
+            }
         default:
         return state
     }
