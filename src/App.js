@@ -1,4 +1,5 @@
 import React from "react";
+import { useDispatch } from 'react-redux'
 import {
   BrowserRouter as Router,
   Switch,
@@ -15,8 +16,9 @@ import Login from './components/Login/login.js';
 import AllCommmission from './components/AllCommission/allCommission.js'
 import ConsolidatedCommission from './components/ConsolidatedCommission/consolidatedCommission.js';
 
+import {getProfile} from './actions.js';
 const RouteWrapper = ({component: Component, ...rest}) => {
-  const authToken = window.localStorage && localStorage.getItem('authToken')
+  const authToken = window.localStorage && localStorage.getItem('authToken');
     return (
 
         // Show the component only when the user is logged in
@@ -30,6 +32,10 @@ const RouteWrapper = ({component: Component, ...rest}) => {
 };
 
 export default function Routes() {
+  const dispatch = useDispatch();
+  React.useEffect(() => {
+    dispatch(getProfile())
+  }, [dispatch])
   return (
     <Router>
       <>
