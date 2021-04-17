@@ -1,5 +1,6 @@
 import React from "react";
 // import { useHistory } from "react-router-dom";
+import { useSelector, useDispatch } from 'react-redux'
 import { makeStyles } from '@material-ui/core/styles';
 import PinDrop from '@material-ui/icons/PinDrop';
 import NavigationIcon from '@material-ui/icons/Navigation';
@@ -10,11 +11,13 @@ import {
     Grid,
     Typography,
     Tabs,
-    Tab
+    Tab,
+    MenuItem
 } from '@material-ui/core';
 
 import AddOffer from '../AddOffer/addOffer.js'
 
+import {getIndustries, saveProfile} from './actions';
 
 const useStyles = makeStyles((theme) => ({
 backgroundContainer: {
@@ -46,10 +49,41 @@ backgroundContainer: {
 export default function Profile () {
     const classes = useStyles();
     // const history = useHistory();
-
+    const dispatch = useDispatch();
     const [geoPosition, setGeoPosition] = React.useState({});
 
-    const [tabId, setTabId] = React.useState(0);
+    const searchParam = new URLSearchParams(window.location.search);
+    const tab = parseInt(searchParam.get('tab') , 10) || 0;
+
+    const [tabId, setTabId] = React.useState(tab);
+
+    const industriesList = useSelector(state => state?.config?.industries ?? [])
+    const user  = useSelector(state => state.user) || {};
+    const {
+        store: {
+            id,
+            store_name,
+            phone,
+            address,
+            latitude,
+            longitude,
+            industry
+        } = {}
+    } = user;
+
+    const [storeName, setStoreName] = React.useState(store_name);
+    const [storeAddress, setStoreAddress] = React.useState(address)
+    const [industryId, setIndustryId] = React.useState(industry)
+
+    React.useEffect(() => {
+        setStoreAddress(address);
+        setStoreName(store_name);
+        setIndustryId(industry);
+        setGeoPosition({
+            latitude,
+            longitude
+        })
+    }, [store_name, address, industry, latitude, longitude])
 
     const  handleChange = (evt, value) => {
       setTabId(value)
@@ -61,7 +95,6 @@ export default function Profile () {
             navigator.geolocation.getCurrentPosition(function (position) {
                 const latitude  = position.coords.latitude;
                 const longitude = position.coords.longitude;
-                console.log(geoPosition)
                 setGeoPosition({
                     latitude,
                     longitude
@@ -70,9 +103,24 @@ export default function Profile () {
         }
 
     }
-    // const handleUpdateOffer = () => {
-    //      history.push("/addOffer");
-    // }
+
+    const handleSubmit = (evt) => {
+        evt.preventDefault();
+        evt.stopPropagation();
+        dispatch(saveProfile({
+            id,
+            store_name: storeName,
+            industry: industryId,
+            address: storeAddress,
+            latitude: Number.parseFloat(geoPosition?.latitude).toFixed(5),
+            longitude: Number.parseFloat(geoPosition?.longitude).toFixed(5)
+        }))
+    }
+
+    React.useEffect(() => {
+        dispatch(getIndustries())
+    }, [dispatch])
+
     return (
         <>
             <Grid container className={classes.backgroundContainer}>
@@ -97,18 +145,8 @@ export default function Profile () {
                 {
                     tabId === 0 &&
                     <Grid item xs={12}>
-                         <form onSubmit={()=>{}} autoComplete='off'>
+                         <form onSubmit={handleSubmit} autoComplete='off'>
                              <Grid container spacing={2} alignItems='center' justify='center'>
-                                <Grid item xs={12}>
-                                    <TextField
-                                        name="name"
-                                        variant="outlined"
-                                        type="text"
-                                        required
-                                        fullWidth
-                                        label="Name"
-                                    />
-                                </Grid>
                                 <Grid item xs={12}>
                                     <TextField
                                         name="mobileNumber"
@@ -117,6 +155,8 @@ export default function Profile () {
                                         required
                                         fullWidth
                                         label="Mobile Number"
+                                        value={phone}
+                                        disabled
                                     />
                                 </Grid>
                                 <Grid item xs={12}>
@@ -127,6 +167,8 @@ export default function Profile () {
                                         required
                                         fullWidth
                                         label="Shop Name"
+                                        value={storeName}
+                                         onChange={(evt) => {setStoreName(evt.target.value)}}
                                     />
                                 </Grid>
                                 <Grid item xs={12}>
@@ -138,6 +180,8 @@ export default function Profile () {
                                         required
                                         fullWidth
                                         label="Address"
+                                        value={storeAddress}
+                                         onChange={(evt) => {setStoreAddress(evt.target.value)}}
                                     />
                                 </Grid>
                                 <Grid item xs={12}>
@@ -148,11 +192,27 @@ export default function Profile () {
                                             </Button>
                                         </Grid>
                                         <Grid item>
-                                            <Button size='small' href={`https://www.google.com/maps/search/?api=1&query=28.5078595,77.0683169`} color="secondary" target='_blank' endIcon={<NavigationIcon />}>
+                                            <Button size='small' href={`https://www.google.com/maps/search/?api=1&query=${geoPosition?.latitude},${geoPosition?.longitude}`} color="secondary" target='_blank' endIcon={<NavigationIcon />}>
                                                 My Location
                                             </Button>
                                         </Grid>
                                     </Grid>
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <TextField
+                                        select
+                                        id="industry"
+                                        value={industryId}
+                                        onChange={(evt) => { setIndustryId(evt.target.value)}}
+                                        label="Select Industry"
+                                        className={classes.textField}
+                                        >
+                                        {
+                                            industriesList.map((item, i) => {
+                                                return <MenuItem value={item.id} key={i}>{item.name}</MenuItem>
+                                            })
+                                        }
+                                    </TextField>
                                 </Grid>
                                 <Grid item xs={12}>
                                     <Button
