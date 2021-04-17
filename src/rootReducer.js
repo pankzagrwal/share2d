@@ -3,7 +3,11 @@ import {
     config,
     user
 } from './reducer.js';
+import stores from './components/StoreList/reducer.js';
+import prospects from './components/Dashboard/reducer.js'
 export default combineReducers({
     config,
-    user
+    user,
+    stores,
+    prospects
 });
