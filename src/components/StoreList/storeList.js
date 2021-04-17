@@ -1,5 +1,5 @@
 import React from "react";
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import {
     List,
     ListItem 
@@ -26,6 +26,9 @@ export default function StoreList ({
     const loader = React.useRef();
     const [selectedStore, setSelectedStore] = React.useState({})
     const dispatch = useDispatch();
+    const storeList = useSelector((store) => {
+        return store?.stores?.results ?? [];
+    })
 
     React.useEffect(() => {
         var options = {
@@ -58,10 +61,17 @@ export default function StoreList ({
     return (
         <List className={classes.list}>
             {
-                [1,2,3,4,5,6,7,8,9,10].map(() => {
+               storeList.map((storeItem, index) => {
+                   const {
+                       id,
+                       store_name,
+                       address,
+                       phone,
+                       offer
+                   } = storeItem
                     return (
-                        <ListItem>
-                            <Store onClick={handleClick}/>
+                        <ListItem key={index}>
+                            <Store id={id} name={store_name} address={address} phone={phone} offer={offer} onClick={handleClick}/>
                         </ListItem>
                     )
                 })
@@ -71,6 +81,7 @@ export default function StoreList ({
                 isOpen={!!selectedStore.id}
                 storeName = {selectedStore.storeName}
                 storeId = {selectedStore.id}
+                offerId = {selectedStore.offerId}
                 onClose={handleClose}
             />
         </List>
