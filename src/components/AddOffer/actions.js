@@ -1,17 +1,12 @@
 import interceptor from '../../utils/interceptor.js';
 
-export const getIndustries = () => async (dispatch) => {
+export const saveOffer = (payload) => async (dispatch) => {
+    const url = payload.id ? `/offer/offer${`/${payload.id}`}` : '/offer/offer';
+    const method = payload.id ? 'patch' : 'post'
     const result = await interceptor({
-        url: '/accounts/industry'
+        url,
+        method,
+        body: payload
     })
-    const industries =  result?.data?.data?.results.map(item => {
-        return {
-            name: item.name
-        }
-    })
-    console.log({industries})
-    dispatch({
-        type: 'SET_INDUSTRIES',
-        payload: industries
-    })
+    console.log(result)
 }
