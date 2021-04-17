@@ -1,5 +1,5 @@
 import React from 'react';
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import {
     Container,
     Grid,
@@ -59,10 +59,10 @@ const useStyles = makeStyles((theme) => ({
 const Dashboard = () => {
     const classes = useStyles();
     const history = useHistory();
+    const dispatch = useDispatch();
     const handleRefer = () => {
         history.push("/ReferBuddy");
     }
-    const dispatch = useDispatch();
 
     React.useEffect(() => {
         dispatch(getLead({
@@ -73,6 +73,12 @@ const Dashboard = () => {
         }))
     }, [dispatch])
 
+    const store = useSelector(state => state?.user?.store) || {};
+    const promoters = useSelector(state => state?.prospects?.promoter ?? [])
+    const {
+        store_name
+    } = store
+
     return (
         <>
         <Grid container className={classes.backgroundContainer}>
@@ -80,7 +86,7 @@ const Dashboard = () => {
                 <Grid container justify='space-between'>
                     <Grid item>
                         <Typography variant="h6" className={classes.name}>
-                            Welcome Pankaj
+                            Welcome {store_name}
                         </Typography>
                     </Grid>
                 </Grid>
@@ -141,7 +147,7 @@ const Dashboard = () => {
                     </Grid>
                 </Grid>
                 <Grid item xs={12}>
-                    <CurrentProspects />
+                    <CurrentProspects promoters={promoters}/>
                 </Grid>
                 <Grid item xs={12} >
                     <RecentCommission />
