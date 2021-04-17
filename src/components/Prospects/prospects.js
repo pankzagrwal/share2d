@@ -156,7 +156,14 @@ const ProspectComing = () => {
   )
 }
 
-const ProspectSent = () => {
+const ProspectSent = ({prospect}) => {
+  const {
+    customer: {
+      name
+    } = {},
+    item_description,
+    business
+  } = prospect;
   const classes = useStyles();
   const profile = React.useMemo(() => Math.floor(Math.random() * 6) + 1, []);
   return (
@@ -169,15 +176,15 @@ const ProspectSent = () => {
       <Grid item container xs={10}  alignItems='center'>
         <Grid item container direction='row' alignItems='center'>
           <Typography variant='subtitle2'>
-            Customer Name
+            {name}
           </Typography>
         </Grid>
         <Grid item container  className={classes.textMuted} direction='column'>
           <span>
-            Description goes here about the requirement
+           {item_description}
           </span>
           <span>
-            Referred To: Merchant Name
+            Referred To: {business}
           </span>
         </Grid>
       </Grid>
@@ -185,10 +192,12 @@ const ProspectSent = () => {
   )
 }
 
-const Prospects = () => {
-    const [prospectsId, setProspectsId] = React.useState(0)
+const Prospects = ({
+  promoters
+}) => {
+    const [prospectsId, setProspectsId] = React.useState(0);
+
     const  handleProspectsChange = (evt, value) => {
-      console.log(value)
       setProspectsId(value)
     }
     return (
@@ -216,11 +225,11 @@ const Prospects = () => {
         {
           prospectsId === 1 &&
           <Grid item xs={12}>
-            <ProspectSent />
-            <ProspectSent />
-            <ProspectSent />
-            <ProspectSent />
-            <ProspectSent />
+            {
+              promoters.map((item, index) => {
+                return <ProspectSent key ={index} prospect={item}/>
+              })
+            }
           </Grid>
         }
         <Grid item xs={10}>
