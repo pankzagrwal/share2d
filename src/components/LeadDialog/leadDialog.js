@@ -1,4 +1,5 @@
 import React from "react";
+import { useDispatch } from 'react-redux'
 import {
     Button,
     Grid,
@@ -10,6 +11,7 @@ import {
 } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 import { makeStyles } from '@material-ui/core/styles';
+import { dropLead } from './actions.js'
 
 const useStyles = makeStyles((theme) => ({
   textField: {
@@ -27,9 +29,25 @@ export default function LeadDialog ({
     onClose,
     isOpen,
     storeName,
-    storeId
+    storeId,
+    offerId
 }) {
-    const classess = useStyles()
+    const classess = useStyles();
+    const dispatch = useDispatch()
+    const [custName, setCustname] = React.useState('');
+    const [custPhone, setCustPhone] = React.useState('');
+    const [requirement, setRequirement] = React.useState('');
+
+    const handleSubmit = () => {
+        dispatch(dropLead({
+            customer: {
+                name: custName,
+                phone: custPhone
+            },
+            item_description: requirement,
+            offer: offerId
+        })).then(handleClose)
+    }
     const handleClose = () => {
         onClose()
     }
@@ -45,7 +63,7 @@ export default function LeadDialog ({
                         <TextField
                             className={classess.textField}
                             id="storeName"
-                            value={'Store Name'}
+                            value={storeName}
                             label="Store Name"
                             disabled
                             >
@@ -55,8 +73,9 @@ export default function LeadDialog ({
                         <TextField
                             className={classess.textField}
                             id="customerName"
-                            value={''}
+                            value={custName}
                             label="Customer Name"
+                            onChange={(evt) => {setCustname(evt.target.value)}}
                             >
                         </TextField>
                     </Grid>
@@ -64,9 +83,22 @@ export default function LeadDialog ({
                         <TextField
                             className={classess.textField}
                             id="customerNumber"
-                            value={''}
+                            value={custPhone}
                             label="Customer Number"
                             type='number'
+                            onChange={(evt) => {setCustPhone(evt.target.value)}}
+                            >
+                        </TextField>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <TextField
+                            className={classess.textField}
+                            id="itemDescription"
+                            value={requirement}
+                            label="Requirement"
+                            type='text'
+                            multiline
+                            onChange={(evt) => {setRequirement(evt.target.value)}}
                             >
                         </TextField>
                     </Grid>
@@ -76,6 +108,7 @@ export default function LeadDialog ({
                             fullWidth
                             variant="contained"
                             color="primary"
+                            onClick={handleSubmit}
                         >
                             Submit
                         </Button>
