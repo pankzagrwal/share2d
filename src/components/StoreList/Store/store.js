@@ -37,14 +37,18 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Store ({
     onClick,
+    id,
     name,
-    commission
+    address,
+    phone,
+    offer
 }) {
     const classes = useStyles();
-    const handleSend = () => {
+    const handleSend = (id, name, offerId) => {
         onClick({
             storeName: name,
-            id: 1
+            id: id,
+            offerId
         })
     }
     return (
@@ -55,17 +59,17 @@ export default function Store ({
             <Grid container item xs={9} direction="column" >
                 <Grid item>
                     <Typography variant="subtitle2">
-                        Store Name
+                        {name}
                     </Typography>
                 </Grid>
                 <Grid item className={classes.textMuted}>
                     <Typography variant="caption" >
-                        Sushant Lok Gurgaon
+                        {address}
                     </Typography>
                 </Grid>
                 <Grid item className={classes.textMuted}>
                     <Typography variant="caption" display="block" gutterBottom>
-                        &#8377; 1234
+                        &#8377; {offer?.flat_commission}
                     </Typography>
                 </Grid>
             </Grid>
@@ -76,7 +80,9 @@ export default function Store ({
                     </Button>
                 </Grid>
                 <Grid item xs={5}>
-                    <Button variant="contained" size='small' className={classes.netOff} color='secondary' onClick={handleSend}>
+                    <Button variant="contained" size='small' className={classes.netOff} color='secondary' onClick={() => {
+                        handleSend(id, name, offer?.id)
+                    }}>
                         Refer
                     </Button>
                 </Grid>
