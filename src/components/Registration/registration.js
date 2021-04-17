@@ -47,7 +47,6 @@ export default function Registration () {
      const classes = useStyles();
      const dispatch = useDispatch();
      const history = useHistory();
-     const [name, setName] = React.useState('');
      const [shopName, setShopName] = React.useState('');
      const [shopAddress, setShopAddress] = React.useState('');
      const [mobileNumber, setMobileNumber] = React.useState('');
@@ -57,13 +56,12 @@ export default function Registration () {
         evt.preventDefault();
         evt.stopPropagation();
         dispatch(postRegistration({
-            name,
             shopName,
             shopAddress,
             mobileNumber,
             password
         })).then(res => {
-             history.push("/addOffer");
+             history.push("/profile?tab=1");
         })
     }
     return (
@@ -97,26 +95,13 @@ export default function Registration () {
                 <Grid container spacing={2} alignItems='center' justify='center'>
                     <Grid item xs={12}>
                         <TextField
-                            name="name"
-                            variant="outlined"
-                            required
-                            fullWidth
-                            label="Name"
-                            value={name}
-                            onChange={(evt) => {
-                                setName(evt.target.value)
-                            }}
-                            autoFocus
-                        />
-                    </Grid>
-                    <Grid item xs={12}>
-                        <TextField
                             name="shopName"
                             variant="outlined"
                             fullWidth
                             label="Shop Name"
                             value={shopName}
                             onChange={(evt) =>{setShopName(evt.target.value)}}
+                            autofocus
                         />
                     </Grid>
                     <Grid item xs={12}>
