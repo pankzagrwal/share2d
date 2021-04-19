@@ -1,6 +1,6 @@
 const prospects = (state = [], action) => {
  switch (action.type) {
-  case 'SET_LEAD_LIST_BUSINESS':
+  case 'SET_LEAD_LIST_BUSSINESS':
    return {
     ...state,
     business: action.payload
