@@ -84,13 +84,34 @@ const profilePicMap = {
   6: Six
 }
 
-const ProspectComing = () => {
+const ProspectComing = ({prospect, updateLead}) => {
   const classes = useStyles();
   const profile = React.useMemo(() => Math.floor(Math.random() * 6) + 1, []);
   const [isExpandable, setIsExpandable] = React.useState(false);
-  const [status, setStatus] = React.useState('')
+  const [status, setStatus] = React.useState('');
+  const [soldAmount, setSoldAmount] = React.useState();
+  const {
+    id,
+    business,
+    customer: {
+      name,
+    } = {},
+    item_description
+  } = prospect;
   const handleChange = (evt) => {
-    setStatus(evt.target.value)
+    setStatus(evt.target.value);
+    if (evt.target.value === 'notSold') {
+      handleSold(3)
+    }
+  }
+
+  const handleSold = (status) => {
+    updateLead({
+      id: id,
+      item_description,
+      price: soldAmount,
+      status
+    })
   }
   return (
     <Grid container justify={'space-between'} alignItems='center' spacing={1} direction='row' className={classes.container}>
@@ -102,15 +123,15 @@ const ProspectComing = () => {
       <Grid item container xs={8}  alignItems='center'>
         <Grid item container direction='row' alignItems='center'>
           <Typography variant='subtitle2'>
-            Customer Name
+            {name}
           </Typography>
         </Grid>
         <Grid item container  className={classes.textMuted} direction='column'>
           <span>
-            Description goes here about the requirement
+            {item_description}
           </span>
           <span>
-            Refered by: Merchant Name
+            Refered by: {business}
           </span>
         </Grid>
       </Grid>
@@ -133,10 +154,14 @@ const ProspectComing = () => {
                       <InputBase
                         className={classes.input}
                         placeholder="Sold Amount"
+                        value={soldAmount}
+                        onChange={(evt) => setSoldAmount(evt.target.value)}
                       />
                       <Divider className={classes.divider} orientation="vertical" />
                       <IconButton color="primary">
-                        <Send fontSize="small"/>
+                        <Send fontSize="small" onClick={() => {
+                          handleSold(2)
+                        }}/>
                       </IconButton>
                     </Paper>
                 </Grid>
@@ -193,7 +218,9 @@ const ProspectSent = ({prospect}) => {
 }
 
 const Prospects = ({
-  promoters
+  promoters,
+  business,
+  updateLead
 }) => {
     const [prospectsId, setProspectsId] = React.useState(0);
 
@@ -216,10 +243,11 @@ const Prospects = ({
         {
           prospectsId === 0 &&
           <Grid item xs={12}>
-            <ProspectComing />
-            <ProspectComing />
-            <ProspectComing />
-            <ProspectComing />
+            {
+              business.map((item, index) => {
+                return <ProspectComing key={index} prospect={item} updateLead={updateLead} />
+              })
+            }
           </Grid>
         }
         {
@@ -227,7 +255,7 @@ const Prospects = ({
           <Grid item xs={12}>
             {
               promoters.map((item, index) => {
-                return <ProspectSent key ={index} prospect={item}/>
+                return <ProspectSent key ={index} prospect={item} />
               })
             }
           </Grid>
