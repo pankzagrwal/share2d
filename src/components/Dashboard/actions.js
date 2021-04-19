@@ -14,3 +14,21 @@ export const getLead = (payload) => async (dispatch) => {
         payload: data?.results
     })
 }
+
+export const updateLead = (payload) => async (dispatch) => {
+    const {
+        id,
+        status,
+        price,
+        item_description
+    } = payload
+    await interceptor({
+        url: `/lead/lead/${id}/sale`,
+        method: 'post',
+        body: {
+            status,
+            price,
+            item_description
+        }
+    })
+}
