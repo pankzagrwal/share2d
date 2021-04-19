@@ -1,6 +1,7 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "share2d",
+  "name": "App to increase your business",
+
   "icons": [
     {
       "src": "favicon.ico",
