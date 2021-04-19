@@ -15,7 +15,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import CurrentProspects from '../Prospects/prospects.js';
 import RecentCommission from '../RecentCommission/recentCommission.js';
 
-import { getLead } from './actions.js'
+import { getLead, updateLead } from './actions.js'
 
 const useStyles = makeStyles((theme) => ({
   backgroundContainer: {
@@ -64,6 +64,10 @@ const Dashboard = () => {
         history.push("/ReferBuddy");
     }
 
+    const updateLeadHandle = (payload) => {
+        dispatch(updateLead(payload))
+    }
+
     React.useEffect(() => {
         dispatch(getLead({
             type: 'bussiness'
@@ -74,7 +78,10 @@ const Dashboard = () => {
     }, [dispatch])
 
     const store = useSelector(state => state?.user?.store) || {};
-    const promoters = useSelector(state => state?.prospects?.promoter ?? [])
+    // Prospects sent
+    const promoters = useSelector(state => state?.prospects?.promoter ?? []);
+    // Prospects coming
+    const business = useSelector(state => state?.prospects?.business ?? [])
     const {
         store_name
     } = store
@@ -147,7 +154,7 @@ const Dashboard = () => {
                     </Grid>
                 </Grid>
                 <Grid item xs={12}>
-                    <CurrentProspects promoters={promoters}/>
+                    <CurrentProspects promoters={promoters} business={business} updateLead={updateLeadHandle} />
                 </Grid>
                 <Grid item xs={12} >
                     <RecentCommission />
