@@ -70,7 +70,7 @@ const Dashboard = () => {
 
     React.useEffect(() => {
         dispatch(getLead({
-            type: 'bussiness'
+            type: 'business'
         }))
         dispatch(getLead({
             type: 'promoter'
