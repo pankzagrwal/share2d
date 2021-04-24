@@ -5,7 +5,7 @@ export const getLead = (payload) => async (dispatch) => {
         type
     } = payload;
     const {data} = await interceptor({
-        url: `/lead/lead?as=${type}`,
+        url: `/lead/lead?as=${type}&fetch_type=in_process`,
         method: 'GET',
     })
 
