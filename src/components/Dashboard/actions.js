@@ -15,6 +15,30 @@ export const getLead = (payload) => async (dispatch) => {
     })
 }
 
+export const getCommission = (payload) => async (dispatch) => {
+    const  {
+        types,
+        firstParty,
+        secondParty
+    } = payload;
+
+    let url = `/payments/transaction?types=${types}`;
+    if (firstParty) {
+        url = `${url}&first_party_ids=${firstParty}`
+    }
+    if (secondParty) {
+        url = `${url}&second_party_ids=${secondParty}`
+    }
+    const {data} = await interceptor({
+        url: url,
+        method: 'GET',
+    })
+        dispatch({
+        type: `SET_COMMISSION_${firstParty ? 'GIVE' : 'RECEIVE'}`,
+        payload: data?.results
+    })
+}
+
 export const updateLead = (payload) => async (dispatch) => {
     const {
         id,
