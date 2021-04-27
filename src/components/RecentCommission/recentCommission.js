@@ -87,11 +87,18 @@ const profilePicMap = {
 }
 
 export const CommissionGive = ({
-    name='Merchant Name',
+    commission,
     status = 'pending',
-    isStore
+    isStore,
+    isReadonly
 }) => {
     const classes = useStyles();
+    const {
+      second_party_detail: {
+        store_name: name = 'Merchant Name',
+      } = {},
+      amount
+    } = commission;
     const profile = Math.floor(Math.random() * 6) + 1;
     return (
         <Grid container alignItems='center' spacing={1} direction='row' className={classes.container}>
@@ -114,13 +121,13 @@ export const CommissionGive = ({
                   <Button href={'tel:9552530381'} className={classes.callText}>
                       <Typography variant='caption'>
                           {/* Referred By: AAA Industires */}
-                          Customer name
+                          Customer name ?? Reqd?
                       </Typography>
                     </Button>
                   </Grid>
                 }
                 {
-                    status === 'pending' &&
+                    status === 'pending' && !isReadonly &&
                     <Grid item container className={classes.actionItem}>
                         <Button variant="contained" size='small' className={classes.pay} color='primary'>
                             Pay
@@ -135,11 +142,11 @@ export const CommissionGive = ({
                 {
                     status !== 'cancelled' &&
                     <Grid item>
-                        &#8377; 1234
+                        &#8377; {Math.round(amount)}
                     </Grid>
                 }
                 <Grid item className={[classes.textMuted, classes[`status_${status}`]]}>
-                    {status}
+                    {'status_not'}
                 </Grid>
             </Grid>
         </Grid>
@@ -147,13 +154,19 @@ export const CommissionGive = ({
 }
 
 export const CommissionReceive = ({
-    name = 'Merchant Name',
+    commission,
     status = 'pending',
     isStore,
     onClick = () => {}
 }) => {
     const classes = useStyles();
     const profile = Math.floor(Math.random() * 6) + 1;
+    const {
+      first_party_detail: {
+        store_name: name
+      },
+      amount
+    } = commission;
     return (
         <Grid container alignItems='center' spacing={1} direction='row' className={classes.container} onClick={onClick}>
         <Grid item xs={2}>
@@ -169,7 +182,7 @@ export const CommissionReceive = ({
               </Typography>
             </Button>
             </Grid>
-            {
+            {/* {
               !isStore &&
               <Grid item container direction='row' alignItems='center'>
               <Button href={'tel:9552530381'} className={classes.callText}>
@@ -178,13 +191,13 @@ export const CommissionReceive = ({
                 </Typography>
               </Button>
               </Grid>
-            }
+            } */}
             <Grid item container  className={classes.textMuted} direction='column'>
             <span>
-                &#8377; 1234
+                &#8377; {amount}
             </span>
             <span className={classes[`status_${status}`]}>
-                {status}
+                {'status_not_avl'}
             </span>
             </Grid>
         </Grid>
@@ -193,7 +206,11 @@ export const CommissionReceive = ({
 }
 
 
-const RecentCommission = () => {
+const RecentCommission = ({
+  receive,
+  give,
+  isReadonly
+}) => {
     const [tabId, setTabId] = React.useState(0)
     const  handleChange = (evt, value) => {
       setTabId(value)
@@ -215,20 +232,21 @@ const RecentCommission = () => {
         {
           tabId === 0 &&
           <Grid item xs={12}>
-            <CommissionReceive />
-            <CommissionReceive />
-            <CommissionReceive />
-            <CommissionReceive />
+            {
+              receive.map((item, index) => {
+                return <CommissionReceive key={index} commission={item}/>
+              })
+            }
           </Grid>
         }
         {
           tabId === 1 &&
           <Grid item xs={12}>
-            <CommissionGive />
-            <CommissionGive />
-            <CommissionGive />
-            <CommissionGive />
-            <CommissionGive />
+            {
+              give.map((item, index) => {
+                return <CommissionGive key={index} commission={item} isReadonly={isReadonly}/>
+              })
+            }
           </Grid>
         }
         <Grid item xs={10}>
