@@ -5,11 +5,27 @@ const prospects = (state = [], action) => {
     ...state,
     business: action.payload
    }
-    case 'SET_LEAD_LIST_PROMOTER':
+  case 'SET_LEAD_LIST_PROMOTER':
    return {
     ...state,
     promoter: action.payload
    }
+  case 'SET_COMMISSION_RECEIVE':
+    return {
+      ...state,
+      commission: {
+        ...state.commission,
+        receive: action.payload
+      }
+    }
+  case 'SET_COMMISSION_GIVE':
+    return {
+      ...state,
+      commission: {
+        ...state.commission,
+        give: action.payload
+      }
+    }
   default:
    return state
  }
