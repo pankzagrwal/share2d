@@ -15,7 +15,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import CurrentProspects from '../Prospects/prospects.js';
 import RecentCommission from '../RecentCommission/recentCommission.js';
 
-import { getLead, updateLead } from './actions.js'
+import { getLead, updateLead, getCommission } from './actions.js'
 
 const useStyles = makeStyles((theme) => ({
   backgroundContainer: {
@@ -68,6 +68,23 @@ const Dashboard = () => {
         dispatch(updateLead(payload))
     }
 
+    const store = useSelector(state => state?.user?.store) || {};
+    // Prospects sent
+    const promoters = useSelector(state => state?.prospects?.promoter ?? []);
+    // Prospects coming
+    const business = useSelector(state => state?.prospects?.business ?? [])
+
+    // Commission Receive
+    const commissionReceive = useSelector(state => state?.prospects?.commission?.receive ?? []);
+
+    // Commission Receive
+    const commissionGive = useSelector(state => state?.prospects?.commission?.give ?? []);
+
+    const {
+        id,
+        store_name
+    } = store
+
     React.useEffect(() => {
         dispatch(getLead({
             type: 'business'
@@ -75,16 +92,20 @@ const Dashboard = () => {
         dispatch(getLead({
             type: 'promoter'
         }))
+
     }, [dispatch])
 
-    const store = useSelector(state => state?.user?.store) || {};
-    // Prospects sent
-    const promoters = useSelector(state => state?.prospects?.promoter ?? []);
-    // Prospects coming
-    const business = useSelector(state => state?.prospects?.business ?? [])
-    const {
-        store_name
-    } = store
+    React.useEffect(() => {
+        dispatch(getCommission({
+            types: 1,
+            secondParty: id
+        }))
+        dispatch(getCommission({
+            types: 1,
+            firstParty: id
+        }))
+    }, [dispatch, id])
+
 
     return (
         <>
@@ -157,7 +178,7 @@ const Dashboard = () => {
                     <CurrentProspects promoters={promoters} business={business} updateLead={updateLeadHandle} />
                 </Grid>
                 <Grid item xs={12} >
-                    <RecentCommission />
+                    <RecentCommission receive={commissionReceive} give={commissionGive} isReadonly/>
                 </Grid>
             </Grid>
 
