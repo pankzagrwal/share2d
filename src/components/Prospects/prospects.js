@@ -92,7 +92,9 @@ const ProspectComing = ({prospect, updateLead}) => {
   const [soldAmount, setSoldAmount] = React.useState();
   const {
     id,
-    business,
+    business_detail: {
+      store_name
+    } = {},
     customer: {
       name,
     } = {},
@@ -131,7 +133,7 @@ const ProspectComing = ({prospect, updateLead}) => {
             {item_description}
           </span>
           <span>
-            Refered by: {business}
+            Refered by: {store_name}
           </span>
         </Grid>
       </Grid>
@@ -187,7 +189,9 @@ const ProspectSent = ({prospect}) => {
       name
     } = {},
     item_description,
-    business
+    business_detail: {
+      store_name = 'Merchant Name'
+    } = {}
   } = prospect;
   const classes = useStyles();
   const profile = React.useMemo(() => Math.floor(Math.random() * 6) + 1, []);
@@ -209,7 +213,7 @@ const ProspectSent = ({prospect}) => {
            {item_description}
           </span>
           <span>
-            Referred To: {business}
+            Referred To: {store_name}
           </span>
         </Grid>
       </Grid>
@@ -248,6 +252,11 @@ const Prospects = ({
                 return <ProspectComing key={index} prospect={item} updateLead={updateLead} />
               })
             }
+          {business.length === 0 &&
+            <Typography variant='caption'>
+              No Data Available
+            </Typography>
+          }
           </Grid>
         }
         {
@@ -258,11 +267,21 @@ const Prospects = ({
                 return <ProspectSent key ={index} prospect={item} />
               })
             }
+          {promoters.length === 0 &&
+            <Typography variant='caption'>
+              No Data Available
+            </Typography>
+          }
           </Grid>
         }
-        <Grid item xs={10}>
+        {/* <Grid item xs={10}>
+          {business.length === 0 &&
+            <Typography variant='caption'>
+              No Data Available
+            </Typography>
+          }
           <Button  color='primary'>View All</Button>
-        </Grid>
+        </Grid> */}
       </Grid>
     )
 }
