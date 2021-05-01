@@ -92,7 +92,7 @@ const ProspectComing = ({prospect, updateLead}) => {
   const [soldAmount, setSoldAmount] = React.useState();
   const {
     id,
-    business_detail: {
+    promoter_detail: {
       store_name
     } = {},
     customer: {
