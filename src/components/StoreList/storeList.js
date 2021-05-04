@@ -20,6 +20,7 @@ const useStyles = makeStyles((theme) => ({
 
 
 export default function StoreList ({
+    industry,
     list
 }) {
     const classes = useStyles();
@@ -43,8 +44,8 @@ export default function StoreList ({
     }, []);
 
     React.useEffect(() => {
-        dispatch(getStores({}))
-    }, [dispatch])
+        dispatch(getStores({industry}))
+    }, [dispatch, industry])
 
     const handleObserver = (entities) => {
         const target = entities[0];
