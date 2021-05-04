@@ -1,4 +1,5 @@
 import React from "react";
+import { useSelector } from 'react-redux'
 import {
     Grid,
     TextField,
@@ -18,16 +19,21 @@ const useStyles = makeStyles((theme) => ({
 export default function IndustryDialog ({
     onClose,
     selectedIndustry,
-    isOpen
+    isOpen,
 }) {
     const classess = useStyles()
     const [value, setValue] = React.useState(selectedIndustry)
+    const industriesList = useSelector(state => state?.config?.industries ?? [])
+
     const handleClose = () => {
         onClose(value)
     }
     const handleChange = (e) => {
         setValue(e.target.value)
-        onClose(e.target.value)
+        onClose({
+            id: e.currentTarget.dataset.value,
+            name: e.currentTarget.textContent
+        })
     }
     return (
         <Dialog onClose={handleClose}  open={isOpen} fullScreen >
@@ -43,12 +49,11 @@ export default function IndustryDialog ({
                         label="Select Industry"
                         onChange={handleChange}
                         >
-                        <MenuItem value="0">
-                            <em>None</em>
-                        </MenuItem>
-                        <MenuItem value={10}>Ten</MenuItem>
-                        <MenuItem value={20}>Twenty</MenuItem>
-                        <MenuItem value={30}>Thirty</MenuItem>
+                        {
+                            industriesList.map((item, i) => {
+                                return <MenuItem value={item.id} name={item.name} key={i}>{item.name}</MenuItem>
+                            })
+                        }
                     </TextField>
                 </Grid>
             </Grid>
