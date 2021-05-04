@@ -8,8 +8,9 @@ import {
     Divider,
     IconButton,
     Switch,
-    Typography
+    Typography,
 } from '@material-ui/core';
+import { useSelector } from 'react-redux'
 import SearchIcon from '@material-ui/icons/Search';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import StoreList from '../StoreList/storeList'
@@ -65,9 +66,22 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function ReferBuddy() {
-    const classess = useStyles()
+    const classess = useStyles();
+    const industriesList = useSelector(state => state?.config?.industries ?? []);
+    const user  = useSelector(state => state.user) || {};
+    const {
+        store: {
+            industry: storeIndustry
+        } = {}
+    } = user
     const [isIndustryOpen, setIsIndustryOpen] = React.useState(false);
     const [isPopularity, setIsPopularity] = React.useState(false);
+    const [industry, setIndustry] = React.useState({})
+
+    React.useEffect(() => {
+        const filteredIndustry = industriesList.filter(item => item.id === storeIndustry)[0];
+        filteredIndustry && setIndustry(filteredIndustry)
+    }, [storeIndustry, industriesList])
     return (
         <>
         <Grid container className={classess.backgroundContainer}>
@@ -99,7 +113,7 @@ export default function ReferBuddy() {
                 <Grid container spacing={3} justify='space-between' alignItems="center" className={classess.industry}>
                     <Grid item>
                         <Button variant="outlined" color="primary" size="small" onClick={() => {setIsIndustryOpen(true)}} endIcon={<FilterListIcon />}>
-                            Automobile
+                            {industry.name}
                         </Button>
                     </Grid>
                     <Grid item>
@@ -113,9 +127,9 @@ export default function ReferBuddy() {
                     </Typography>
                     </Grid>
                 </Grid>
-                <StoreList />
+                <StoreList industry={industry.id} />
             </Container>
-            <IndustryDialog isOpen={isIndustryOpen} selectedIndustr={0} onClose={(value) => {setIsIndustryOpen(false)}}/>
+            <IndustryDialog value={industry} isOpen={isIndustryOpen} selectedIndustry={industry.id} onClose={(value) => {setIndustry(value); setIsIndustryOpen(false)}}/>
         </>
     )
 }
