@@ -87,7 +87,7 @@ const profilePicMap = {
 }
 
 export const CommissionGive = ({
-    commission,
+    commission = {},
     status = 'pending',
     isStore,
     isReadonly
@@ -154,7 +154,7 @@ export const CommissionGive = ({
 }
 
 export const CommissionReceive = ({
-    commission,
+    commission = {},
     status = 'pending',
     isStore,
     onClick = () => {}
@@ -164,7 +164,7 @@ export const CommissionReceive = ({
     const {
       first_party_detail: {
         store_name: name
-      },
+      } = {},
       amount
     } = commission;
     return (
