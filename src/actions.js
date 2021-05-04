@@ -24,4 +24,13 @@ export const getProfile = (payload) => async (dispatch) => {
         type: 'SET_PROFILE',
         payload: profile ?? {}
     })
+    const result = await interceptor({
+        url: '/accounts/industry'
+    })
+    const industries =  result?.data?.results
+
+    dispatch({
+        type: 'SET_INDUSTRIES',
+        payload: industries
+    })
 }
