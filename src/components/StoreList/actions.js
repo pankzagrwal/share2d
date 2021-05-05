@@ -2,11 +2,9 @@ import interceptor from '../../utils/interceptor.js';
 
 export const getStores = (payload) => async (dispatch) => {
     const  {
-        industry
+        industry = ''
     } = payload;
-    if (!industry) {
-        return;
-    }
+
     const stores = await interceptor({
             url: `/accounts/store?type=business&industries=${industry}`,
             method: 'GET',
