@@ -46,7 +46,7 @@ export const updateLead = (payload) => async (dispatch) => {
         price,
         item_description
     } = payload
-    await interceptor({
+    return await interceptor({
         url: `/lead/lead/${id}/sale`,
         method: 'post',
         body: {
@@ -55,4 +55,5 @@ export const updateLead = (payload) => async (dispatch) => {
             item_description
         }
     })
+
 }
