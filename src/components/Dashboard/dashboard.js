@@ -65,7 +65,16 @@ const Dashboard = () => {
     }
 
     const updateLeadHandle = (payload) => {
-        dispatch(updateLead(payload))
+        dispatch(updateLead(payload)).then(() => {
+            Promise.all([dispatch(getLead({
+                 type: 'business'
+            })),
+            dispatch(getCommission({
+                types: 1,
+                secondParty: id
+            }))]
+            )
+        })
     }
 
     const store = useSelector(state => state?.user?.store) || {};
