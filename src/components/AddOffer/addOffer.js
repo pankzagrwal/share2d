@@ -56,7 +56,7 @@ export default function AddOffer () {
         evt.stopPropagation();
         dispatch(saveOffer({
             id,
-            type: commissionType,
+            type: parseInt(commissionType, 10),
             flat_commission: commission
         }))
     }
@@ -82,8 +82,8 @@ export default function AddOffer () {
                         <FormControl component="fieldset">
                             <FormLabel component="legend">Commission Type</FormLabel>
                             <RadioGroup  row value={commissionType} onChange={handleCommissionTypeChange}>
-                                <FormControlLabel value={1} control={<Radio color="primary" />} label="Percentage" />
-                                <FormControlLabel value={0} control={<Radio color="primary" />} label="Flat" />
+                                <FormControlLabel value={'1'} control={<Radio color="primary" />} label="Percentage" />
+                                <FormControlLabel value={'0'} control={<Radio color="primary" />} label="Flat" />
                             </RadioGroup>
                         </FormControl>
                     </Grid>
