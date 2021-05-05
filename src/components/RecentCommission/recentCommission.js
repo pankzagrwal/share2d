@@ -237,6 +237,11 @@ const RecentCommission = ({
                 return <CommissionReceive key={index} commission={item}/>
               })
             }
+          {receive.length === 0 &&
+            <Typography variant='caption'>
+              No Data Available
+            </Typography>
+          }
           </Grid>
         }
         {
@@ -247,11 +252,16 @@ const RecentCommission = ({
                 return <CommissionGive key={index} commission={item} isReadonly={isReadonly}/>
               })
             }
+          {give.length === 0 &&
+            <Typography variant='caption'>
+              No Data Available
+            </Typography>
+          }
           </Grid>
         }
-        <Grid item xs={10}>
+        {/* <Grid item xs={10}>
           <Button  color='primary'>View All</Button>
-        </Grid>
+        </Grid> */}
       </Grid>
     )
 
