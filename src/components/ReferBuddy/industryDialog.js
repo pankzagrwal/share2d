@@ -50,7 +50,7 @@ export default function IndustryDialog ({
                         onChange={handleChange}
                         >
                         {
-                            industriesList.map((item, i) => {
+                            [{id: '', name: 'All Industries'}, ...industriesList].map((item, i) => {
                                 return <MenuItem value={item.id} name={item.name} key={i}>{item.name}</MenuItem>
                             })
                         }
