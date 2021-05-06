@@ -13,9 +13,13 @@ export const getIndustries = () => async (dispatch) => {
 }
 
 export const saveProfile = (payload) => async (dispatch) => {
-    await interceptor({
+    const {data} = await interceptor({
         url: `/accounts/store/${payload.id}`,
         method: 'patch',
         body: payload
+    })
+    dispatch({
+        type: 'SET_STORE',
+        payload: data ?? {}
     })
 }
