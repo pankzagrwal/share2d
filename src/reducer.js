@@ -27,6 +27,14 @@ export const user = (state = {}, action) => {
                 ...state,
                 ...action.payload
             }
+        case 'SET_STORE':
+            return {
+                ...state,
+                    store: {
+                        ...state?.store,
+                        ...action.payload
+                    }
+            }
         default:
         return state
     }
