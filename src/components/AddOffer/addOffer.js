@@ -9,7 +9,10 @@ import {
     FormLabel,
     RadioGroup,
     FormControlLabel,
-    Radio
+    Radio,
+    Typography,
+    Divider,
+    Link
 } from '@material-ui/core'
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -19,6 +22,7 @@ const useStyles = makeStyles((theme) => ({
 
   form: {
     width: '100%',
+    marginTop: theme.spacing(2)
   },
   textField: {
       width: '100%',
@@ -44,7 +48,7 @@ export default function AddOffer () {
     } = offer;
 
     const [commission, setCommission] = React.useState(flat_commission);
-    const [commissionType, setCommissionType] = React.useState(type);
+    const [commissionType, setCommissionType] = React.useState(type || '0');
 
     const handleCommissionTypeChange = (evt) => {
         setCommissionType(evt.target.value)
@@ -64,20 +68,12 @@ export default function AddOffer () {
 
     return (
         <Container maxWidth='xs' justify='center' className={classes.paper}>
+            <Typography variant="overline" display="block">
+                Enter the commisssion, you would like to offer
+            </Typography>
+            <Divider light/>
              <form onSubmit={handleSubmit} autoComplete='off' className={classes.form}>
                  <Grid container spacing={2} alignItems='center' justify='center'>
-                    <Grid item xs={12}>
-                        <TextField
-                            name="commission"
-                            variant="outlined"
-                            type="number"
-                            required
-                            fullWidth
-                            label="Commission"
-                            onChange={(evt) => {setCommission(evt.target.value)}}
-                            value={commission}
-                        />
-                    </Grid>
                     <Grid item xs={12}>
                         <FormControl component="fieldset">
                             <FormLabel component="legend">Commission Type</FormLabel>
@@ -86,6 +82,18 @@ export default function AddOffer () {
                                 <FormControlLabel value={'0'} control={<Radio color="primary" />} label="Flat" />
                             </RadioGroup>
                         </FormControl>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <TextField
+                            name="commission"
+                            variant="outlined"
+                            type="number"
+                            required
+                            fullWidth
+                            label={`Commission in ${commissionType === '1' ? '%' : 'Rs'}`}
+                            onChange={(evt) => {setCommission(evt.target.value)}}
+                            value={commission}
+                        />
                     </Grid>
                     <Grid item xs={12}>
                         <Button
@@ -100,6 +108,9 @@ export default function AddOffer () {
                     </Grid>
                  </Grid>
              </form>
+            <Typography variant="caption" display="block">
+                Please <Link href='/' variant="body2"> skip </Link> if you would like to  work as Referrer only.
+            </Typography>
         </Container>
     )
 } 
