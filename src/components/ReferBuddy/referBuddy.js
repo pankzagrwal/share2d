@@ -113,7 +113,7 @@ export default function ReferBuddy() {
                 <Grid container spacing={3} justify='space-between' alignItems="center" className={classess.industry}>
                     <Grid item>
                         <Button variant="outlined" color="primary" size="small" onClick={() => {setIsIndustryOpen(true)}} endIcon={<FilterListIcon />}>
-                            {industry.name}
+                            {industry.name || 'All Industry'}
                         </Button>
                     </Grid>
                     <Grid item>
