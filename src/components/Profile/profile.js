@@ -100,6 +100,14 @@ export default function Profile () {
                     longitude
                 })
             })
+            dispatch({
+                type: 'SET_ALERT',
+                payload: {
+                    severity: 'success',
+                    message: 'Location Updated. Please submit',
+                    isOpen: true
+                }
+            })
         }
 
     }
@@ -188,7 +196,7 @@ export default function Profile () {
                                     <Grid container alignItems='center' justify='space-between'>
                                         <Grid item>
                                             <Button variant="outlined" color="primary" endIcon={<PinDrop />} onClick={getGeoLocation} size='small'>
-                                                Refresh Location
+                                                Update Location
                                             </Button>
                                         </Grid>
                                         <Grid item>
