@@ -33,6 +33,10 @@ export const postRegistration = (payload) => async (dispatch) => {
                 password
             }
         })
+        dispatch({
+            type: 'SET_PROFILE',
+            payload: login?.data?.profile ?? {}
+        })
     }
     return login;
 }
