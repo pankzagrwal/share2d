@@ -5,6 +5,16 @@ export const config = (state = [], action) => {
     ...state,
     industries: action.payload
    }
+  case 'SET_ALERT':
+    return {
+        ...state,
+        alert: action.payload
+    }
+    case 'SET_LOADER':
+        return {
+            ...state,
+            loader: action.payload
+        }
   default:
    return state
  }
