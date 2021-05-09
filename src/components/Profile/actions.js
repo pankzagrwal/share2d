@@ -13,6 +13,10 @@ export const getIndustries = () => async (dispatch) => {
 }
 
 export const saveProfile = (payload) => async (dispatch) => {
+    dispatch({
+        type: 'SET_LOADER',
+        payload: true
+    })
     const {data} = await interceptor({
         url: `/accounts/store/${payload.id}`,
         method: 'patch',
@@ -21,5 +25,17 @@ export const saveProfile = (payload) => async (dispatch) => {
     dispatch({
         type: 'SET_STORE',
         payload: data ?? {}
+    })
+    dispatch({
+        type: 'SET_ALERT',
+        payload: {
+            isOpen: true,
+            severity: 'success',
+            message: 'Profile Saved'
+        }
+    })
+    dispatch({
+        type: 'SET_LOADER',
+        payload: false
     })
 }
