@@ -1,12 +1,16 @@
 import React from "react";
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import {
   BrowserRouter as Router,
   Switch,
   Route,
   Redirect,
 } from "react-router-dom";
+import { makeStyles } from '@material-ui/core/styles';
+import Backdrop from '@material-ui/core/Backdrop';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import BottomNavigation from './components/bottomNavigation/bottomNavigation.js';
+import SnackBar from './components/Snackbar/snackbar.js';
 import Dashboard from './components/Dashboard/dashboard.js';
 import Registration from './components/Registration/registration.js';
 import AddOffer from './components/AddOffer/addOffer.js';
@@ -31,8 +35,17 @@ const RouteWrapper = ({component: Component, ...rest}) => {
     );
 };
 
+const useStyles = makeStyles((theme) => ({
+  backdrop: {
+    zIndex: theme.zIndex.drawer + 1,
+    color: '#fff',
+  },
+}));
+
 export default function Routes() {
+  const classes = useStyles();
   const dispatch = useDispatch();
+  const isLoader = useSelector(state => state?.config?.loader ?? false);
   React.useEffect(() => {
     dispatch(getProfile())
   }, [dispatch])
@@ -54,8 +67,11 @@ export default function Routes() {
             <Registration />
           </Route>
         </Switch>
-
+        <SnackBar />
         <BottomNavigation />
+        <Backdrop  open={isLoader} className={classes.backdrop}>
+          <CircularProgress color="inherit" />
+        </Backdrop>
       </>
     </Router>
   );
