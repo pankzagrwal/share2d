@@ -5,8 +5,9 @@ import {
     Typography,
     Tabs,
     Tab,
-    NativeSelect
 } from '@material-ui/core';
+import { useSelector, useDispatch } from 'react-redux'
+import {getTransactions} from './actions.js';
 
 import {
     CommissionGive,
@@ -36,7 +37,17 @@ const useStyles = makeStyles((theme) => ({
 
 const AllCommmission = () => {
     const [tabId, setTabId] = React.useState(0);
-    const classes = useStyles()
+    const classes = useStyles();
+    const dispatch = useDispatch();
+    const params = new URLSearchParams(window.location.search);
+    let id = params.get('id');
+
+    const transactions = useSelector((state) => state?.transaction?.merchant ?? [])
+    const userId = useSelector(state => state?.user?.id);
+    React.useEffect(() => {
+        dispatch(getTransactions(id))
+    }, [id, dispatch]);
+
     const  handleChange = (evt, value) => {
       setTabId(value)
     }
@@ -56,7 +67,7 @@ const AllCommmission = () => {
         </Grid>
         <Container maxWidth='xs' justify='center' className={classes.container}>
             <Grid container spacing={2}>
-                <Grid item xs={12}>
+                {/* <Grid item xs={12}>
                     <NativeSelect
                         value={''}
                         onChange={() => {}}
@@ -70,7 +81,7 @@ const AllCommmission = () => {
                         <option value={20}>Twenty</option>
                         <option value={30}>Thirty</option>
                     </NativeSelect>
-                </Grid>
+                </Grid> */}
                 <Grid item xs={12} container>
                 <Grid item xs={12}>
                 <Tabs value={tabId} onChange={handleChange}>
@@ -82,30 +93,34 @@ const AllCommmission = () => {
                 {
                 tabId === 0 &&
                 <Grid item xs={12}>
-                    <CommissionReceive />
-                    <CommissionGive status='success'/>
-                    <CommissionReceive  status='success'/>
-                    <CommissionGive />
-                    <CommissionReceive status='cancelled'/>
+                    {
+                        transactions.map((item, index) => {
+                            let content;
+                            const {
+                                store_name,
+                                phone,
+                            } = item.second_party_detail;
+                            if (userId === item.first_party) {
+                                content = <CommissionGive name={store_name} amount={item.amount} phone={phone} isReadonly/>
+                            }
+                            else {
+                                content = <CommissionReceive  name={store_name} amount={item.amount} phone={phone}/>
+                            }
+                            return content;
+                        })
+                    }
                 </Grid>
                 }
                 {
                 tabId === 1 &&
                 <Grid item xs={12}>
-                    <CommissionReceive status='pending'/>
-                    <CommissionReceive status='success'/>
-                    <CommissionReceive status='cancelled'/>
-                    <CommissionReceive status='pending'/>
+                    Coming Soon !
                 </Grid>
                 }
                 {
                 tabId === 2 &&
                 <Grid item xs={12}>
-                    <CommissionGive status='success'/>
-                    <CommissionGive />
-                    <CommissionGive />
-                    <CommissionGive status='success'/>
-                    <CommissionGive />
+                    Coming Soon !
                 </Grid>
                 }
                 </Grid>
