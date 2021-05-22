@@ -5,6 +5,14 @@ export const config = (state = [], action) => {
     ...state,
     industries: action.payload
    }
+    case 'SET_OTHER_STORES':
+    return {
+      ...state,
+      otherStore: {
+        ...state.otherStore,
+        ...action.payload
+      }
+    }
   case 'SET_ALERT':
     return {
         ...state,
@@ -49,5 +57,4 @@ export const user = (state = {}, action) => {
         return state
     }
 }
-       
 
