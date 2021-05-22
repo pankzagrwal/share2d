@@ -6,6 +6,7 @@ import {
     Tabs,
     Tab,
 } from '@material-ui/core';
+import { useSelector, useDispatch } from 'react-redux'
 
 import {
     CommissionGive,
@@ -15,6 +16,8 @@ import {
 
 import { makeStyles } from '@material-ui/core/styles';
 import { useHistory } from "react-router-dom";
+
+import {getTransactions} from './actions';
 
 const useStyles = makeStyles((theme) => ({
   backgroundContainer: {
@@ -54,12 +57,20 @@ const ConsolidatedCommission = () => {
     const [tabId, setTabId] = React.useState(0);
     const classes = useStyles();
     const history = useHistory();
+    const dispatch = useDispatch();
+    const transaction = useSelector((state) => state?.transaction?.allMerchant ?? [])
+    const otherStore = useSelector((state) => state?.config?.otherStore ?? {})
     const  handleChange = (evt, value) => {
       setTabId(value)
     }
-    const clickHandle = (id, store) => {
-        history.push(`/allCommissions?store=${id}`);
+    const clickHandle = (evt, id) => {
+        history.push(`/allCommissions?id=${id}`);
+        evt.stopPropagation();
     }
+
+    React.useEffect(() => {
+        dispatch(getTransactions())
+    }, [dispatch])
     return (
 
         <>
@@ -95,11 +106,24 @@ const ConsolidatedCommission = () => {
                     {
                     tabId === 0 &&
                     <Grid item xs={12}>
-                        <CommissionReceive isStore name='ABC Enterprise' onClick={() => {
-                            clickHandle(1)
-                        }} />
-                        <CommissionGive isStore name='XYZ Enterprise'/>
-                        <CommissionGive isStore name='share2D'/>
+                    {
+                        transaction.map((item, index) => {
+                            const {amount, to_id, id } = item;
+                            let content;
+                            if (amount < 0) {
+                                content = <CommissionReceive isStore name={otherStore[to_id]?.store_name} amount={amount} phone={otherStore[to_id]?.phone} onClick={(evt) => {
+                                    clickHandle(evt, id)
+                                }} />
+                            }
+                            else {
+                                content = <CommissionGive isStore name={otherStore[to_id]?.store_name} amount={amount} phone={otherStore[to_id]?.phone} onClick={(evt) => {
+                                    clickHandle(evt, id)
+                                }} />
+                            }
+
+                            return content;
+                        })
+                    }
                     </Grid>
                     }
                     {
