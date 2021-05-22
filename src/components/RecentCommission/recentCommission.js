@@ -69,7 +69,7 @@ const useStyles = makeStyles((theme) => ({
         color: 'green'
     },
     actionItem: {
-        marginTop: theme.spacing(2)
+        marginTop: theme.spacing(1)
     },
     callText: {
       padding: 0,
@@ -87,45 +87,43 @@ const profilePicMap = {
 }
 
 export const CommissionGive = ({
-    commission = {},
+    name,
+    amount,
+    phone,
     status = 'pending',
     isStore,
-    isReadonly
+    isReadonly,
+    onClick = () => {}
 }) => {
     const classes = useStyles();
-    const {
-      second_party_detail: {
-        store_name: name = 'Merchant Name',
-      } = {},
-      amount
-    } = commission;
     const profile = Math.floor(Math.random() * 6) + 1;
     return (
-        <Grid container alignItems='center' spacing={1} direction='row' className={classes.container}>
+        <Grid container alignItems='center' spacing={1} direction='row' className={classes.container} onClick={onClick}>
             <Grid item xs={2}>
-                <Button href={'tel:9552530381'} className={classes.buttonBlock}>
+                <Button onClick={(evt) => {
+                  evt.preventDefault();
+                  evt.stopPropagation();
+                  window.open(`tel:${phone}`)
+                }} className={classes.buttonBlock}>
                 <Avatar src={profilePicMap[profile]} className={classes.small}/>
                 </Button>
             </Grid>
             <Grid item container xs={8}  alignItems='center'>
                 <Grid item container direction='row' alignItems='center'>
-                <Button href={'tel:9552530381'} className={classes.callText}>
                     <Typography variant='subtitle2'>
                         {name}
                     </Typography>
-                  </Button>
                 </Grid>
-                {
+                {/* {
                   !isStore &&
                   <Grid item  direction='row' alignItems='center'>
-                  <Button href={'tel:9552530381'} className={classes.callText}>
-                      <Typography variant='caption'>
-                          {/* Referred By: AAA Industires */}
-                          Customer name ?? Reqd?
-                      </Typography>
-                    </Button>
+                    <Button href={`tel:${phone}`} className={classes.callText}>
+                        <Typography variant='caption'>
+                            Customer name ?? Reqd?
+                        </Typography>
+                      </Button>
                   </Grid>
-                }
+                } */}
                 {
                     status === 'pending' && !isReadonly &&
                     <Grid item container className={classes.actionItem}>
@@ -145,42 +143,40 @@ export const CommissionGive = ({
                         &#8377; {Math.round(amount)}
                     </Grid>
                 }
-                <Grid item className={[classes.textMuted, classes[`status_${status}`]]}>
+                {/* <Grid item className={[classes.textMuted, classes[`status_${status}`]]}>
                     {'status_not'}
-                </Grid>
+                </Grid> */}
             </Grid>
         </Grid>
     )
 }
 
 export const CommissionReceive = ({
-    commission = {},
+    name,
+    amount,
+    phone,
     status = 'pending',
     isStore,
     onClick = () => {}
 }) => {
     const classes = useStyles();
     const profile = Math.floor(Math.random() * 6) + 1;
-    const {
-      first_party_detail: {
-        store_name: name
-      } = {},
-      amount
-    } = commission;
     return (
         <Grid container alignItems='center' spacing={1} direction='row' className={classes.container} onClick={onClick}>
         <Grid item xs={2}>
-            <Button href={'tel:9552530381'} className={classes.buttonBlock}>
+            <Button onClick={(evt) => {
+              evt.preventDefault();
+              evt.stopPropagation();
+              window.open(`tel:${phone}`)
+            }} className={classes.buttonBlock}>
             <Avatar src={profilePicMap[profile]} className={classes.small}/>
             </Button>
         </Grid>
         <Grid item container xs={8}  alignItems='center'>
             <Grid item container direction='row' alignItems='center'>
-            <Button href={'tel:9552530381'} className={classes.callText}>
               <Typography variant='subtitle2'>
                   {name}
               </Typography>
-            </Button>
             </Grid>
             {/* {
               !isStore &&
@@ -195,9 +191,6 @@ export const CommissionReceive = ({
             <Grid item container  className={classes.textMuted} direction='column'>
             <span>
                 &#8377; {amount}
-            </span>
-            <span className={classes[`status_${status}`]}>
-                {'status_not_avl'}
             </span>
             </Grid>
         </Grid>
@@ -234,7 +227,14 @@ const RecentCommission = ({
           <Grid item xs={12}>
             {
               receive.map((item, index) => {
-                return <CommissionReceive key={index} commission={item}/>
+                const {
+                  first_party_detail: {
+                    store_name: name,
+                    phone
+                  } = {},
+                  amount
+                } = item;
+                return <CommissionReceive key={index} name={name} amount={amount} phone={phone}/>
               })
             }
           {receive.length === 0 &&
@@ -249,7 +249,13 @@ const RecentCommission = ({
           <Grid item xs={12}>
             {
               give.map((item, index) => {
-                return <CommissionGive key={index} commission={item} isReadonly={isReadonly}/>
+                    const {
+      second_party_detail: {
+        store_name: name = 'Merchant Name',
+      } = {},
+      amount
+    } = item;
+                return <CommissionGive key={index} name={name} amount={amount} isReadonly={isReadonly}/>
               })
             }
           {give.length === 0 &&
