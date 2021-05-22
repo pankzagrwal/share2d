@@ -10,7 +10,7 @@ import { useHistory } from "react-router-dom";
 
 import {postRegistration} from './actions.js';
 
-import background from '../../assets/background.jpg'
+
 import logo from '../../assets/logo.png'
 
 const useStyles = makeStyles((theme) => ({
@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
   },
   background: {
     width: '100%',
-    backgroundImage: `url(${background})`,
+    background: 'linear-gradient(to bottom right, #F64F60, #8950FC)',
     padding: theme.spacing(3),
     marginBottom: theme.spacing(3),
     backgroundSize: 'cover',
@@ -144,7 +144,7 @@ export default function Registration () {
                             type="submit"
                             fullWidth
                             variant="contained"
-                            color="primary"
+                            color="secondary"
                         >
                             Submit
                         </Button>
