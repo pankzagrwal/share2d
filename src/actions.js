@@ -6,7 +6,7 @@ export const getProfile = (payload) => async (dispatch) => {
     if (!authToken) {
         dispatch({
             type: 'SET_PROFILE',
-            payload: {}
+            payload: {isLoaded: true}
         })
         return;
     }
