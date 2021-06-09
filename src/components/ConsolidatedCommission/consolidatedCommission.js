@@ -17,7 +17,7 @@ import {
 import { makeStyles } from '@material-ui/core/styles';
 import { useHistory } from "react-router-dom";
 
-import {getTransactions} from './actions';
+import {getTransactions, settleTransaction} from './actions';
 
 const useStyles = makeStyles((theme) => ({
   backgroundContainer: {
@@ -88,9 +88,9 @@ const ConsolidatedCommission = () => {
         <Container maxWidth='xs' justify='center' className={classes.container}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <Typography variant='subtitle2'>
+                    {/* <Typography variant='subtitle2'>
                         Total Customer: 8, Confirmed Sent Leads: 12
-                    </Typography>
+                    </Typography> */}
                     {/* <Typography variant='overline'>
                         You Owe/get Rs 12340
                     </Typography> */}
@@ -116,9 +116,9 @@ const ConsolidatedCommission = () => {
                                 }} />
                             }
                             else {
-                                content = <CommissionGive isStore name={otherStore[to_id]?.store_name} amount={amount} phone={otherStore[to_id]?.phone} onClick={(evt) => {
+                                content = <CommissionGive isStore id={id} name={otherStore[to_id]?.store_name} amount={amount} phone={otherStore[to_id]?.phone} onClick={(evt) => {
                                     clickHandle(evt, id)
-                                }} />
+                                }} onSettle={(id) => {dispatch(settleTransaction(id))}} />
                             }
 
                             return content;
@@ -129,14 +129,13 @@ const ConsolidatedCommission = () => {
                     {
                     tabId === 1 &&
                     <Grid item xs={12}>
-                        <CommissionReceive isStore name='ABC Enterprise'/>
+                        Coming Soon !
                     </Grid>
                     }
                     {
-                    tabId === 2 &&
+                    tabId ===    2 &&
                     <Grid item xs={12}>
-                        <CommissionGive isStore name='XYZ Enterprise'/>
-                        <CommissionGive isStore name='share2D'/>
+                        Coming Soon !
                     </Grid>
                     }
                 </Grid>
