@@ -28,7 +28,7 @@ export const config = (state = [], action) => {
  }
 }
 
-export const user = (state = {}, action) => {
+export const user = (state = {isLoaded: false}, action) => {
      switch (action.type) {
         case 'SET_USER_DETAILS':
         return {
@@ -43,6 +43,7 @@ export const user = (state = {}, action) => {
         case 'SET_PROFILE':
             return {
                 ...state,
+                isLoaded: true,
                 ...action.payload
             }
         case 'SET_STORE':
