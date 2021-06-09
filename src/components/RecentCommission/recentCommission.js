@@ -5,7 +5,10 @@ import {
     Typography,
     Avatar,
     Tabs,
-    Tab
+    Tab,
+    Dialog,
+    DialogActions,
+    DialogTitle 
 } from '@material-ui/core';
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -63,10 +66,12 @@ const useStyles = makeStyles((theme) => ({
     fontSize: '12px'
   },
   status_pending: {
-      color: 'orange'
+      color: 'orange',
+      fontWeight: 'bold'
   },
     status_success: {
-        color: 'green'
+        color: 'green',
+        fontWeight: 'bold'
     },
     actionItem: {
         marginTop: theme.spacing(1)
@@ -87,16 +92,24 @@ const profilePicMap = {
 }
 
 export const CommissionGive = ({
+    id,
     name,
     amount,
     phone,
     status = 'pending',
     isStore,
     isReadonly,
-    onClick = () => {}
+    onClick = () => {},
+    onSettle = () => {}
 }) => {
     const classes = useStyles();
     const profile = Math.floor(Math.random() * 6) + 1;
+    const [showConfirm, setShowConfirm] = React.useState(false)
+    const handleSettle = (evt) => {
+      evt.stopPropagation();
+      setShowConfirm(false);
+      onSettle(id)
+    }
     return (
         <Grid container alignItems='center' spacing={1} direction='row' className={classes.container} onClick={onClick}>
             <Grid item xs={2}>
@@ -108,45 +121,54 @@ export const CommissionGive = ({
                 <Avatar src={profilePicMap[profile]} className={classes.small}/>
                 </Button>
             </Grid>
-            <Grid item container xs={8}  alignItems='center'>
+            <Grid item container xs={7}  alignItems='center'>
                 <Grid item container direction='row' alignItems='center'>
                     <Typography variant='subtitle2'>
                         {name}
                     </Typography>
                 </Grid>
-                {/* {
-                  !isStore &&
-                  <Grid item  direction='row' alignItems='center'>
-                    <Button href={`tel:${phone}`} className={classes.callText}>
-                        <Typography variant='caption'>
-                            Customer name ?? Reqd?
-                        </Typography>
-                      </Button>
-                  </Grid>
-                } */}
                 {
-                    status === 'pending' && !isReadonly &&
+                    !isReadonly &&
                     <Grid item container className={classes.actionItem}>
-                        <Button variant="contained" size='small' className={classes.pay} color='primary'>
+                        {/* <Button variant="contained" size='small' className={classes.pay} color='primary'>
                             Pay
-                        </Button>
-                        <Button variant="contained" size='small' className={classes.netOff} color='secondary'>
-                            Net Off
+                        </Button> */}
+                        <Button variant="contained" size='small' className={classes.netOff} color='secondary' onClick={(evt) => {
+                            evt.stopPropagation();
+                            setShowConfirm(true);
+                        }}>
+                            Settle
                         </Button>
                     </Grid>
                 }
             </Grid>
-            <Grid item container xs={2} alignItems='center'>
+            <Grid item container xs={3} alignItems='flex-end' direction='column'>
                 {
                     status !== 'cancelled' &&
-                    <Grid item>
+                    <Grid item className={classes.status_success}>
                         &#8377; {Math.round(amount)}
                     </Grid>
                 }
-                {/* <Grid item className={[classes.textMuted, classes[`status_${status}`]]}>
-                    {'status_not'}
-                </Grid> */}
+                <Grid item className={[classes.textMuted]}>
+                    You'll Give
+                </Grid>
             </Grid>
+              <Dialog
+                open={showConfirm}
+                onClose={() => {setShowConfirm(false)}}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+              >
+                <DialogTitle id="alert-dialog-title">{"Are you sure?"}</DialogTitle>
+                <DialogActions>
+                  <Button onClick={(evt) => { evt.stopPropagation(); setShowConfirm(false)}} color="primary">
+                    Cancel
+                  </Button>
+                  <Button onClick={(evt) => {handleSettle(evt, )}} color="secondary" autoFocus>
+                    Yes
+                  </Button>
+                </DialogActions>
+              </Dialog>
         </Grid>
     )
 }
@@ -163,37 +185,33 @@ export const CommissionReceive = ({
     const profile = Math.floor(Math.random() * 6) + 1;
     return (
         <Grid container alignItems='center' spacing={1} direction='row' className={classes.container} onClick={onClick}>
-        <Grid item xs={2}>
-            <Button onClick={(evt) => {
-              evt.preventDefault();
-              evt.stopPropagation();
-              window.open(`tel:${phone}`)
-            }} className={classes.buttonBlock}>
-            <Avatar src={profilePicMap[profile]} className={classes.small}/>
-            </Button>
-        </Grid>
-        <Grid item container xs={8}  alignItems='center'>
-            <Grid item container direction='row' alignItems='center'>
-              <Typography variant='subtitle2'>
-                  {name}
-              </Typography>
-            </Grid>
-            {/* {
-              !isStore &&
-              <Grid item container direction='row' alignItems='center'>
-              <Button href={'tel:9552530381'} className={classes.callText}>
-                <Typography variant='caption'>
-                  Customer Name
-                </Typography>
+          <Grid item xs={2}>
+              <Button onClick={(evt) => {
+                evt.preventDefault();
+                evt.stopPropagation();
+                window.open(`tel:${phone}`)
+              }} className={classes.buttonBlock}>
+              <Avatar src={profilePicMap[profile]} className={classes.small}/>
               </Button>
+          </Grid>
+          <Grid item container xs={7}  alignItems='center'>
+              <Grid item container direction='row' alignItems='center'>
+                <Typography variant='subtitle2'>
+                    {name}
+                </Typography>
               </Grid>
-            } */}
-            <Grid item container  className={classes.textMuted} direction='column'>
-            <span>
-                &#8377; {amount}
-            </span>
+          </Grid>
+            <Grid item container xs={3} alignItems='flex-end' direction='column'>
+                {
+                    status !== 'cancelled' &&
+                    <Grid item className={classes.status_pending}>
+                        &#8377; {Math.round(amount)}
+                    </Grid>
+                }
+                <Grid item className={[classes.textMuted]}>
+                    You'll Get
+                </Grid>
             </Grid>
-        </Grid>
         </Grid>
     )
 }
