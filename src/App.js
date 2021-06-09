@@ -23,12 +23,13 @@ import ConsolidatedCommission from './components/ConsolidatedCommission/consolid
 import {getProfile} from './actions.js';
 const RouteWrapper = ({component: Component, ...rest}) => {
   const authToken = window.localStorage && localStorage.getItem('authToken');
+  const storeId = useSelector(state => state?.user?.id);
     return (
 
         // Show the component only when the user is logged in
         // Otherwise, redirect the user to /signin page
         <Route {...rest} render={props => (
-            authToken ?
+            authToken && storeId ?
                 <Component {...props} />
             : <Redirect to="/login" />
         )} />
@@ -40,15 +41,30 @@ const useStyles = makeStyles((theme) => ({
     zIndex: theme.zIndex.drawer + 1,
     color: '#fff',
   },
+  loading: {
+    zIndex: theme.zIndex.drawer + 1,
+    backgroundColor: '#f64e60',
+    color: 'white'
+  },
 }));
 
 export default function Routes() {
   const classes = useStyles();
   const dispatch = useDispatch();
   const isLoader = useSelector(state => state?.config?.loader ?? false);
+  const isLoaded = useSelector(state => state?.user?.isLoaded);
+  
+
   React.useEffect(() => {
     dispatch(getProfile())
   }, [dispatch])
+  if (!isLoaded) {
+    return (
+        <Backdrop  open={true} className={classes.loading}>
+          <CircularProgress color="inherit" />
+        </Backdrop>
+    )
+  }
   return (
     <Router>
       <>
