@@ -28,3 +28,27 @@ export const getTransactions = () => async (dispatch) => {
         payload: otherStore || []
     })
 }
+
+export const settleTransaction = (id) => async (dispatch) => {
+    dispatch({
+        type: 'SET_LOADER',
+        payload: true
+    })
+    await interceptor({
+        url: `/payments/ledger/${id}/settle`,
+        method: 'POST'
+    })
+    dispatch({
+        type: 'SET_ALERT',
+        payload: {
+            isOpen: true,
+            severity: 'success',
+            message: 'Settled !!'
+        }
+    })
+    getTransactions()
+    dispatch({
+        type: 'SET_LOADER',
+        payload: false
+    })
+}
