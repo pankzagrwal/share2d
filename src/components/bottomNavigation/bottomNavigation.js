@@ -1,4 +1,5 @@
 import React from "react";
+import { useSelector } from 'react-redux'
 import { makeStyles } from '@material-ui/core/styles';
 import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
@@ -30,7 +31,7 @@ export default function Navigation () {
     const classes = useStyles();
     const { pathname } = useLocation();
     const [value, setValue] = React.useState(0);
-
+    const isLoggedIn = useSelector(state =>  state?.user?.id ?? false)
     React.useEffect(() => {
         setValue(path.indexOf(pathname))
     }, [pathname])
@@ -38,6 +39,9 @@ export default function Navigation () {
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
+    if (!isLoggedIn) {
+      return null;
+    }
 
     return (
             <BottomNavigation value={value} onChange={handleChange} className={classes.root}>
