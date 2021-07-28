@@ -5,6 +5,7 @@ import {
     Typography,
     Tabs,
     Tab,
+    Link,
 } from '@material-ui/core';
 import { useSelector, useDispatch } from 'react-redux'
 import {getTransactions} from './actions.js';
@@ -16,6 +17,7 @@ import {
 
 
 import { makeStyles } from '@material-ui/core/styles';
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   backgroundContainer: {
@@ -44,6 +46,7 @@ const AllCommmission = () => {
 
     const transactions = useSelector((state) => state?.transaction?.merchant ?? [])
     const userId = useSelector(state => state?.user?.id);
+    const history = useHistory();
     React.useEffect(() => {
         dispatch(getTransactions(id))
     }, [id, dispatch]);
@@ -92,6 +95,7 @@ const AllCommmission = () => {
                 </Grid>
                 {
                 tabId === 0 &&
+                <>
                 <Grid item xs={12}>
                     {
                         transactions.map((item, index) => {
@@ -109,7 +113,19 @@ const AllCommmission = () => {
                             return content;
                         })
                     }
+                    {
+                        transactions.length === 0 && 'No Transaction found'
+                    }
                 </Grid>
+                <Grid item xs={12} onClick={(evt) => {
+                    history.push(`/allSettled?id=${id}`);
+                    evt.stopPropagation();
+                }}>
+                    <Typography variant="button" display="block" gutterBottom>
+                        <Link color='secondary' onClick={(e) => e.preventDefault()}>Settled Transaction.. </Link>
+                    </Typography>
+                </Grid>
+                </>
                 }
                 {
                 tabId === 1 &&
