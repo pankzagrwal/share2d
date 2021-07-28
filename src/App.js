@@ -19,6 +19,7 @@ import ReferBuddy from './components/ReferBuddy/referBuddy.js';
 import Login from './components/Login/login.js';
 import AllCommmission from './components/AllCommission/allCommission.js'
 import ConsolidatedCommission from './components/ConsolidatedCommission/consolidatedCommission.js';
+import SettledCommission from './components/SettledCommission/settledCommission.js'
 
 import {getProfile} from './actions.js';
 const RouteWrapper = ({component: Component, ...rest}) => {
@@ -76,6 +77,7 @@ export default function Routes() {
           <RouteWrapper component={Dashboard} path='/'  exact/>
           <RouteWrapper component={AllCommmission} path='/allCommissions' exact />
           <RouteWrapper component={ConsolidatedCommission} path='/consolidatedCommission' exact />
+          <RouteWrapper component={SettledCommission} path='/allSettled' exact />
           <Route exact path="/login">
             <Login />
           </Route>
