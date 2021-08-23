@@ -140,7 +140,7 @@ const Dashboard = () => {
                                     Total Customers
                                 </Typography>
                                 <Typography variant="overline" display="block">
-                                    28 out of 99 leads
+                                    {/* 28 out of 99 leads */} Coming Soon
                                 </Typography>
                                 </CardContent>
                             </Card>
@@ -152,7 +152,7 @@ const Dashboard = () => {
                                     Active Promoters
                                 </Typography>
                                 <Typography variant="overline" display="block">
-                                    2341
+                                    {/* 2341 */} Coming Soon
                                 </Typography>
                                 </CardContent>
                             </Card>
@@ -164,7 +164,7 @@ const Dashboard = () => {
                                     Comission Earned
                                 </Typography>
                                 <Typography variant="overline" display="block">
-                                    40000 out of 12 leads
+                                    {/* 40000 out of 12 leads */} Coming Soon
                                 </Typography>
                                 </CardContent>
                             </Card>
@@ -176,7 +176,7 @@ const Dashboard = () => {
                                     Acive Businesses
                                 </Typography>
                                 <Typography variant="overline" display="block" onClick={handleRefer}>
-                                    1209
+                                    {/* 1209 */} Coming Soon
                                 </Typography>
                                 </CardContent>
                             </Card>
