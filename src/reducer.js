@@ -35,6 +35,11 @@ export const user = (state = {isLoaded: false}, action) => {
             ...state,
             ...action.payload
         };
+        case 'UPDATE_OFFER':
+            return {
+                ...state,
+                offer: action.payload
+            }
         case 'SET_REGISTRATION_STATUS':
             return {
                 ...state,
