@@ -77,7 +77,7 @@ export default function StoreList ({
                     )
                 })
             }
-            <div ref={loader}>Loading</div>
+            {/* <div ref={loader}>Loading</div> */}
             <LeadDialog
                 isOpen={!!selectedStore.id}
                 storeName = {selectedStore.storeName}
