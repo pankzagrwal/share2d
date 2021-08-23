@@ -3,15 +3,15 @@ import {
     Button,
     Container,
     Grid,
-    Paper,
-    InputBase,
-    Divider,
-    IconButton,
-    Switch,
+    // Paper,
+    // InputBase,
+    // Divider,
+    // IconButton,
+    // Switch,
     Typography,
 } from '@material-ui/core';
 import { useSelector } from 'react-redux'
-import SearchIcon from '@material-ui/icons/Search';
+// import SearchIcon from '@material-ui/icons/Search';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import StoreList from '../StoreList/storeList'
 import IndustryDialog from './industryDialog';
@@ -75,7 +75,7 @@ export default function ReferBuddy() {
         } = {}
     } = user
     const [isIndustryOpen, setIsIndustryOpen] = React.useState(false);
-    const [isPopularity, setIsPopularity] = React.useState(false);
+    // const [isPopularity, setIsPopularity] = React.useState(false);
     const [industry, setIndustry] = React.useState({})
 
     React.useEffect(() => {
@@ -96,7 +96,7 @@ export default function ReferBuddy() {
             </Grid>
         </Grid>
             <Container maxWidth='xs' justify='center' className={classess.paper}>
-                <Grid container spacing={4} direction='column' className={classess.search}>
+                {/* <Grid container spacing={4} direction='column' className={classess.search}>
                     <Grid item xs={12}>
                         <Paper component="form" className={classess.root}>
                         <InputBase
@@ -109,14 +109,14 @@ export default function ReferBuddy() {
                         </IconButton>
                         </Paper>
                     </Grid>
-                </Grid>
+                </Grid> */}
                 <Grid container spacing={3} justify='space-between' alignItems="center" className={classess.industry}>
                     <Grid item>
                         <Button variant="outlined" color="primary" size="small" onClick={() => {setIsIndustryOpen(true)}} endIcon={<FilterListIcon />}>
                             {industry.name || 'All Industry'}
                         </Button>
                     </Grid>
-                    <Grid item>
+                    {/* <Grid item>
                     <Typography component="div">
                         <Grid component="label" container alignItems="center" spacing={1}>
                         <Grid item>
@@ -125,7 +125,7 @@ export default function ReferBuddy() {
                         <Grid item className={classess.popularity}>Popularity</Grid>
                         </Grid>
                     </Typography>
-                    </Grid>
+                    </Grid> */}
                 </Grid>
                 <StoreList industry={industry.id} />
             </Container>
