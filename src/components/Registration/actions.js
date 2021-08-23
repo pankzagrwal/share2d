@@ -1,6 +1,8 @@
 import interceptor from '../../utils/interceptor.js';
 
 export const postRegistration = (payload) => async (dispatch) => {
+    let login;
+    try {
     const  {
         name,
         mobileNumber,
@@ -16,7 +18,6 @@ export const postRegistration = (payload) => async (dispatch) => {
         name,
         address: shopAddress
     }
-    let login;
     const { status } = await interceptor({
         url: '/accounts/registration',
         method: 'POST',
@@ -38,5 +39,10 @@ export const postRegistration = (payload) => async (dispatch) => {
             payload: login?.data?.profile ?? {}
         })
     }
+    }
+    catch(err) {
+        console.log(err)
+    }
+
     return login;
 }
