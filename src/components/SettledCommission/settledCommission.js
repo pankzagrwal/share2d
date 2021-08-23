@@ -61,7 +61,7 @@ const AllCommmission = () => {
             <Grid item xs={12}>
                 <Grid container justify='space-between'>
                     <Grid item>
-                        <Typography variant="h6" className={classes.name}>
+                        <Typography variant="h6" className={classes.name}  align='center'>
                            Settled Transaction
                         </Typography>
                     </Grid>
@@ -121,8 +121,8 @@ const AllCommmission = () => {
                     history.push(`/allCommissions?id=${id}`);
                     evt.stopPropagation();
                 }}>
-                    <Typography variant="button" display="block" gutterBottom>
-                        <Link color='secondary' onClick={(e) => e.preventDefault()}>UnSettled Commission.. </Link>
+                    <Typography variant="button" display="block" gutterBottom align='center'>
+                        <Link color='secondary' onClick={(e) => e.preventDefault()}>Go Back to un-settled Commission </Link>
                     </Typography>
                 </Grid>
                 </>
