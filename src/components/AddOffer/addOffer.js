@@ -44,14 +44,15 @@ export default function AddOffer () {
     const {
         id,
         type,
-        flat_commission
+        flat_commission,
+        percentage_commission
     } = offer;
 
-    const [commission, setCommission] = React.useState(flat_commission);
-    const [commissionType, setCommissionType] = React.useState(type || '0');
+    const [commission, setCommission] = React.useState(flat_commission || percentage_commission);
+    const [commissionType, setCommissionType] = React.useState(type || 0);
 
     const handleCommissionTypeChange = (evt) => {
-        setCommissionType(evt.target.value)
+        setCommissionType(parseInt(evt.target.value, 10))
     }
 
 
@@ -60,8 +61,9 @@ export default function AddOffer () {
         evt.stopPropagation();
         dispatch(saveOffer({
             id,
-            type: parseInt(commissionType, 10),
-            flat_commission: commission
+            type: commissionType,
+            flat_commission: commissionType === 0 ? commission : null,
+            percentage_commission:  commissionType === 1 ? commission : null
         }))
     }
 
@@ -78,8 +80,8 @@ export default function AddOffer () {
                         <FormControl component="fieldset">
                             <FormLabel component="legend">Commission Type</FormLabel>
                             <RadioGroup  row value={commissionType} onChange={handleCommissionTypeChange}>
-                                <FormControlLabel value={'1'} control={<Radio color="primary" />} label="Percentage" />
-                                <FormControlLabel value={'0'} control={<Radio color="primary" />} label="Flat" />
+                                <FormControlLabel value={1} control={<Radio color="primary" />} label="Percentage" />
+                                <FormControlLabel value={0} control={<Radio color="primary" />} label="Flat" />
                             </RadioGroup>
                         </FormControl>
                     </Grid>
