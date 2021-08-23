@@ -69,7 +69,12 @@ export default function Store ({
                 </Grid>
                 <Grid item className={classes.textMuted}>
                     <Typography variant="caption" display="block" gutterBottom>
-                        &#8377; {offer?.flat_commission}
+                    {
+                        offer?.flat_commission && <> &#8377; {offer?.flat_commission} </>
+                    }
+                    {
+                        offer?.percentage_commission && <>{offer?.percentage_commission} % </>
+                    }
                     </Typography>
                 </Grid>
             </Grid>
