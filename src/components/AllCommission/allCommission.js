@@ -121,8 +121,8 @@ const AllCommmission = () => {
                     history.push(`/allSettled?id=${id}`);
                     evt.stopPropagation();
                 }}>
-                    <Typography variant="button" display="block" gutterBottom>
-                        <Link color='secondary' onClick={(e) => e.preventDefault()}>Settled Transaction.. </Link>
+                    <Typography variant="button" display="block" gutterBottom align='center'>
+                        <Link color='secondary' onClick={(e) => e.preventDefault()}>View Settled Transaction.. </Link>
                     </Typography>
                 </Grid>
                 </>
