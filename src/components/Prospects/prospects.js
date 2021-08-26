@@ -127,15 +127,30 @@ const ProspectComing = ({prospect, updateLead}) => {
           <Typography variant='subtitle2'>
             {name}
           </Typography>
+          <SmartphoneIcon fontSize='small' onClick={(evt) => {
+                  evt.preventDefault();
+                  evt.stopPropagation();
+                  window.open(`tel:123456789`)
+          }}/>
         </Grid>
         <Grid item container  className={classes.textMuted} direction='column'>
           <span>
             {item_description}
-          </span>
+          </span>ac
           <span>
-            Refered by: {store_name}
+            Refered by: 
           </span>
         </Grid>
+          <Grid item container direction='row' alignItems='center'>
+            <Typography variant='body2'>
+              {store_name}
+            </Typography>
+            <SmartphoneIcon fontSize='small'  onClick={(evt) => {
+                  evt.preventDefault();
+                  evt.stopPropagation();
+                  window.open(`tel:123456789`)
+          }}/>
+          </Grid>
       </Grid>
       <Grid item xs={2} className={classes.dot} onClick={() => setIsExpandable(!isExpandable)}>
         <span >...</span>
@@ -168,14 +183,14 @@ const ProspectComing = ({prospect, updateLead}) => {
                     </Paper>
                 </Grid>
               }
-                <Grid item container className={classes.actionItem}>
+                {/* <Grid item container className={classes.actionItem}>
                     <Button variant="contained" size='small' className={classes.pay} color='primary' startIcon={<SmartphoneIcon />}>
                         Customer 
                     </Button>
                     <Button variant="contained" size='small' className={classes.netOff} color='secondary ' startIcon={<SmartphoneIcon />}>
                         Merchant 
                     </Button>
-                </Grid>
+                </Grid> */}
             </Grid>
           </Collapse>
         </Grid>
