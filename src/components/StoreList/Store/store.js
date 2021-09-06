@@ -80,7 +80,11 @@ export default function Store ({
             </Grid>
             <Grid item container xs={12} alignItems='center' justify='space-between'>
                 <Grid item xs={5}>
-                    <Button variant="outlined" size='small' className={classes.pay} color='primary'>
+                    <Button variant="outlined" size='small' className={classes.pay} color='primary' onClick={(evt) => {
+                        evt.preventDefault();
+                        evt.stopPropagation();
+                        window.open(`tel:${phone}`)
+                    }}>
                         Call
                     </Button>
                 </Grid>
