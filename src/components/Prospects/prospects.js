@@ -13,10 +13,13 @@ import {
     Divider,
     IconButton,
     Tabs,
-    Tab
+    Tab,
+    Dialog,
+    DialogActions,
+    DialogTitle 
 } from '@material-ui/core';
 import Send from '@material-ui/icons/Send';
-import SmartphoneIcon from '@material-ui/icons/Smartphone';
+import SmartphoneIcon from '@material-ui/icons/Phone';
 
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -87,23 +90,27 @@ const profilePicMap = {
 const ProspectComing = ({prospect, updateLead}) => {
   const classes = useStyles();
   const profile = React.useMemo(() => Math.floor(Math.random() * 6) + 1, []);
-  const [isExpandable, setIsExpandable] = React.useState(false);
+  // const [isExpandable, setIsExpandable] = React.useState(false);
+  const isExpandable = true;
   const [status, setStatus] = React.useState('');
+  const [showConfirm, setShowConfirm] = React.useState(false)
   const [soldAmount, setSoldAmount] = React.useState();
   const {
     id,
     promoter_detail: {
-      store_name
+      store_name,
+      phone: promoter_phone
     } = {},
     customer: {
       name,
+      phone
     } = {},
     item_description
   } = prospect;
   const handleChange = (evt) => {
     setStatus(evt.target.value);
     if (evt.target.value === 'notSold') {
-      handleSold(3)
+      setShowConfirm(true)
     }
   }
 
@@ -118,11 +125,11 @@ const ProspectComing = ({prospect, updateLead}) => {
   return (
     <Grid container justify={'space-between'} alignItems='center' spacing={1} direction='row' className={classes.container}>
       <Grid item xs={2}>
-        <Button href={'tel:9552530381'} className={classes.buttonBlock}>
+        {/* <Button href={'tel:9552530381'} className={classes.buttonBlock}> */}
           <Avatar src={profilePicMap[profile]} className={classes.small}/>
-        </Button>
+        {/* </Button> */}
       </Grid>
-      <Grid item container xs={8}  alignItems='center'>
+      <Grid item container xs={10}  alignItems='center'>
         <Grid item container direction='row' alignItems='center'>
           <Typography variant='subtitle2'>
             {name}
@@ -130,13 +137,13 @@ const ProspectComing = ({prospect, updateLead}) => {
           <SmartphoneIcon fontSize='small' onClick={(evt) => {
                   evt.preventDefault();
                   evt.stopPropagation();
-                  window.open(`tel:123456789`)
+                  window.open(`tel:${phone}`)
           }}/>
         </Grid>
         <Grid item container  className={classes.textMuted} direction='column'>
           <span>
             {item_description}
-          </span>ac
+          </span>
           <span>
             Refered by: 
           </span>
@@ -148,13 +155,13 @@ const ProspectComing = ({prospect, updateLead}) => {
             <SmartphoneIcon fontSize='small'  onClick={(evt) => {
                   evt.preventDefault();
                   evt.stopPropagation();
-                  window.open(`tel:123456789`)
+                  window.open(`tel:${promoter_phone}`)
           }}/>
           </Grid>
       </Grid>
-      <Grid item xs={2} className={classes.dot} onClick={() => setIsExpandable(!isExpandable)}>
+      {/* <Grid item xs={2} className={classes.dot} onClick={() => setIsExpandable(!isExpandable)}>
         <span >...</span>
-      </Grid>
+      </Grid> */}
         <Grid item xs={10}>
           <Collapse in={isExpandable}>
             <Grid container className={classes.collapse}>
@@ -194,6 +201,20 @@ const ProspectComing = ({prospect, updateLead}) => {
             </Grid>
           </Collapse>
         </Grid>
+              <Dialog
+                open={showConfirm}
+                onClose={() => {setShowConfirm(false)}}
+              >
+                <DialogTitle>{"Are you sure?"}</DialogTitle>
+                <DialogActions>
+                  <Button onClick={(evt) => { evt.stopPropagation(); setShowConfirm(false); setStatus('')}} color="primary">
+                    Cancel
+                  </Button>
+                  <Button onClick={() => {handleSold(3)}} color="secondary">
+                    Yes
+                  </Button>
+                </DialogActions>
+              </Dialog>
     </Grid>
   )
 }
