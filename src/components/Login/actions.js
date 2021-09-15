@@ -6,18 +6,33 @@ export const postLogin = (payload) => async (dispatch) => {
         password
     } = payload;
     let login;
-        login = await interceptor({
-            url: '/accounts/session',
-            method: 'POST',
-            apiName: 'login',
-            body: {
-                username: mobileNumber,
-                password
-            }
-        })
-    dispatch({
-        type: 'SET_PROFILE',
-        payload: login?.data?.profile ?? {}
-    })
-    return login;
+        try {
+            login = await interceptor({
+                url: '/accounts/session',
+                method: 'POST',
+                apiName: 'login',
+                body: {
+                    username: mobileNumber,
+                    password
+                }
+            })
+
+            dispatch({
+                type: 'SET_PROFILE',
+                payload: login?.data?.profile ?? {}
+            })
+
+            return login;
+
+        }
+        catch {
+            dispatch({
+                type: 'SET_ALERT',
+                payload: {
+                    isOpen: true,
+                    severity: 'error',
+                    message: 'Login Error'
+                }
+            })
+        }
 }
