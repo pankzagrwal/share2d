@@ -23,6 +23,19 @@ export const dropLead = (payload) => async (dispatch) => {
                         message: 'Lead Sent'
                     }
                 })
+        }).catch(() => {
+            dispatch({
+                type: 'SET_LOADER',
+                payload: false
+            })
+            dispatch({
+                type: 'SET_ALERT',
+                payload: {
+                    isOpen: true,
+                    severity: 'error',
+                    message: 'Failed'
+                }
+            })
         })
 
 }
