@@ -39,10 +39,17 @@ export const postRegistration = (payload) => async (dispatch) => {
             payload: login?.data?.profile ?? {}
         })
     }
+        return login;
     }
-    catch(err) {
-        console.log(err)
-    }
+        catch {
+            dispatch({
+                type: 'SET_ALERT',
+                payload: {
+                    isOpen: true,
+                    severity: 'error',
+                    message: 'Registration  Failed'
+                }
+            })
+        }
 
-    return login;
 }
