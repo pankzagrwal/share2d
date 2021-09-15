@@ -17,6 +17,7 @@ export const saveProfile = (payload) => async (dispatch) => {
         type: 'SET_LOADER',
         payload: true
     })
+    try {
     const {data} = await interceptor({
         url: `/accounts/store/${payload.id}`,
         method: 'patch',
@@ -38,4 +39,20 @@ export const saveProfile = (payload) => async (dispatch) => {
         type: 'SET_LOADER',
         payload: false
     })
+    }
+    catch {
+            dispatch({
+                type: 'SET_LOADER',
+                payload: false
+            })
+            dispatch({
+                type: 'SET_ALERT',
+                payload: {
+                    isOpen: true,
+                    severity: 'error',
+                    message: 'Profile Update Failed'
+                }
+            })
+    }
+
 }
