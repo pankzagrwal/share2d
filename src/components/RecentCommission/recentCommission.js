@@ -133,7 +133,7 @@ export const CommissionGive = ({
                         {/* <Button variant="contained" size='small' className={classes.pay} color='primary'>
                             Pay
                         </Button> */}
-                        <Button variant="contained" size='small' className={classes.netOff} color='secondary' onClick={(evt) => {
+                        <Button disabled={amount === 0} variant="contained" size='small' className={classes.netOff} color='secondary' onClick={(evt) => {
                             evt.stopPropagation();
                             setShowConfirm(true);
                         }}>
