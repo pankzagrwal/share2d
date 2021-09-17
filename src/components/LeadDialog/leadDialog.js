@@ -50,7 +50,6 @@ export default function LeadDialog ({
     }
     const handleClose = () => {
         onClose();
-        window.open(`https://wa.me/${custPhone}?text=hello ${custName}, How are you`, '_blank');
     }
     return (
         <Dialog onClose={handleClose}  open={isOpen} fullScreen >
