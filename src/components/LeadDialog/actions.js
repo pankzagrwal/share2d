@@ -23,6 +23,7 @@ export const dropLead = (payload) => async (dispatch) => {
                         message: 'Lead Sent'
                     }
                 })
+                 window.open(`https://wa.me/${payload?.customer?.phone}?text=hello ${payload?.customer?.name}, How are you`, '_blank');
         }).catch(() => {
             dispatch({
                 type: 'SET_LOADER',
