@@ -1,6 +1,7 @@
 import interceptor from '../../utils/interceptor.js';
 
 export const getTransactions = () => async (dispatch) => {
+    try {
     const {data} = await interceptor({
         url: '/payments/ledger'
     })
@@ -27,10 +28,23 @@ export const getTransactions = () => async (dispatch) => {
         type: 'SET_OTHER_STORES',
         payload: otherStore || []
     })
+    }
+    catch  {
+            dispatch({
+                type: 'SET_ALERT',
+                payload: {
+                    isOpen: true,
+                    severity: 'error',
+                    message: 'Some Error Occured, Try Again'
+                }
+            })
+    }
+
 }
 
 export const settleTransaction = (id) => async (dispatch) => {
-    dispatch({
+    try {
+            dispatch({
         type: 'SET_LOADER',
         payload: true
     })
@@ -51,4 +65,19 @@ export const settleTransaction = (id) => async (dispatch) => {
         type: 'SET_LOADER',
         payload: false
     })
+    }
+    catch {
+    dispatch({
+        type: 'SET_LOADER',
+        payload: false
+    })
+                    dispatch({
+                type: 'SET_ALERT',
+                payload: {
+                    isOpen: true,
+                    severity: 'error',
+                    message: 'Some Error Occured, Try Again'
+                }
+            })
+    }
 }
