@@ -1,8 +1,8 @@
-import React from 'react';
-import { useSelector, useDispatch } from 'react-redux'
-import Snackbar from '@material-ui/core/Snackbar';
-import MuiAlert from '@material-ui/lab/Alert';
-import { makeStyles } from '@material-ui/core/styles';
+import React from "react";
+import { useSelector, useDispatch } from "react-redux";
+import Snackbar from "@material-ui/core/Snackbar";
+import MuiAlert from "@material-ui/lab/Alert";
+import { makeStyles } from "@material-ui/core/styles";
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -21,27 +21,22 @@ export default function SnackbarComp() {
   const classes = useStyles();
   const dispatch = useDispatch();
 
-  const alertData = useSelector(state => state?.config?.alert ?? [])
-  const {
-      severity,
-      message,
-      isOpen
-  } = alertData;
-
+  const alertData = useSelector((state) => state?.config?.alert ?? []);
+  const { severity, message, isOpen } = alertData;
 
   const handleClose = (event, reason) => {
-    if (reason === 'clickaway') {
+    if (reason === "clickaway") {
       return;
     }
 
     dispatch({
-        type: 'SET_ALERT',
-        payload: {
-            isOpen: false,
-            severity: '',
-            message: ''
-        }
-    })
+      type: "SET_ALERT",
+      payload: {
+        isOpen: false,
+        severity: "",
+        message: "",
+      },
+    });
   };
 
   return (
@@ -51,7 +46,6 @@ export default function SnackbarComp() {
           {message}
         </Alert>
       </Snackbar>
-
     </div>
   );
 }

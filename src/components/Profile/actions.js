@@ -1,58 +1,56 @@
-import interceptor from '../../utils/interceptor.js';
+import interceptor from "../../utils/interceptor.js";
 
 export const getIndustries = () => async (dispatch) => {
-    const result = await interceptor({
-        url: '/accounts/industry'
-    })
-    const industries =  result?.data?.results
+  const result = await interceptor({
+    url: "/accounts/industry",
+  });
+  const industries = result?.data?.results;
 
-    dispatch({
-        type: 'SET_INDUSTRIES',
-        payload: industries
-    })
-}
+  dispatch({
+    type: "SET_INDUSTRIES",
+    payload: industries,
+  });
+};
 
 export const saveProfile = (payload) => async (dispatch) => {
+  dispatch({
+    type: "SET_LOADER",
+    payload: true,
+  });
+  try {
+    const { data } = await interceptor({
+      url: `/accounts/store/${payload.id}`,
+      method: "patch",
+      body: payload,
+    });
     dispatch({
-        type: 'SET_LOADER',
-        payload: true
-    })
-    try {
-    const {data} = await interceptor({
-        url: `/accounts/store/${payload.id}`,
-        method: 'patch',
-        body: payload
-    })
+      type: "SET_STORE",
+      payload: data ?? {},
+    });
     dispatch({
-        type: 'SET_STORE',
-        payload: data ?? {}
-    })
+      type: "SET_ALERT",
+      payload: {
+        isOpen: true,
+        severity: "success",
+        message: "Profile Saved",
+      },
+    });
     dispatch({
-        type: 'SET_ALERT',
-        payload: {
-            isOpen: true,
-            severity: 'success',
-            message: 'Profile Saved'
-        }
-    })
+      type: "SET_LOADER",
+      payload: false,
+    });
+  } catch {
     dispatch({
-        type: 'SET_LOADER',
-        payload: false
-    })
-    }
-    catch {
-            dispatch({
-                type: 'SET_LOADER',
-                payload: false
-            })
-            dispatch({
-                type: 'SET_ALERT',
-                payload: {
-                    isOpen: true,
-                    severity: 'error',
-                    message: 'Profile Update Failed'
-                }
-            })
-    }
-
-}
+      type: "SET_LOADER",
+      payload: false,
+    });
+    dispatch({
+      type: "SET_ALERT",
+      payload: {
+        isOpen: true,
+        severity: "error",
+        message: "Profile Update Failed",
+      },
+    });
+  }
+};
